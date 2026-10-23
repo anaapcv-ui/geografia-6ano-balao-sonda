@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leitura Guiada · Balão-Sonda · Geografia 6º</title>
+<style>
+  :root{
+    --palco:#0b1426; --palco2:#12203a; --aco:#22324f; --aco2:#33496e;
+    --ambar:#ffcf33; --magenta:#ff8a3d; --ciano:#3fd0e8; --verde:#4ade80; --verde2:#248a56;
+    --vermelho:#ff5d5d; --texto:#eaf0f8; --cinza:#8f98b2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:
+    radial-gradient(1100px 480px at 50% -10%,#16305a,#0b1426 60%),var(--palco);
+    color:var(--texto);line-height:1.6;padding-bottom:60px}
+  header{background:linear-gradient(120deg,#0e1a3e,#1a2a55);padding:26px 18px;text-align:center;
+    box-shadow:0 4px 18px rgba(0,0,0,.5);border-bottom:4px solid var(--ciano)}
+  header .selo{font-size:.78rem;letter-spacing:2px;color:#bfe9ff;text-transform:uppercase}
+  header h1{font-size:1.5rem;margin:6px 0 2px}
+  header p{color:#cfe0f5;font-size:.92rem}
+  .wrap{max-width:820px;margin:0 auto;padding:16px}
+  .barra-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
+  .barra-nav a{background:var(--palco2);color:var(--texto);text-decoration:none;padding:7px 12px;
+    border-radius:20px;font-size:.85rem;border:1px solid var(--aco)}
+  .barra-nav a.on{background:var(--ciano);color:#042030;font-weight:bold}
+  .barra-nav a.lock{opacity:.5}
+  .intro{background:var(--palco2);border:1px solid var(--aco);border-radius:14px;padding:16px;margin-bottom:16px}
+  .intro h2{color:var(--ciano);font-size:1.1rem;margin-bottom:8px}
+  .intro ol{margin:8px 0 0 20px}
+  .painel{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;
+    background:var(--palco2);border:1px solid var(--aco);border-radius:12px;padding:10px 14px;margin-bottom:16px;font-size:.85rem}
+  .painel .btns{display:flex;gap:6px;flex-wrap:wrap}
+  button{cursor:pointer;font-family:inherit}
+  .mini{background:var(--palco);color:var(--texto);border:1px solid var(--aco2);border-radius:8px;padding:6px 10px;font-size:.8rem}
+  .mini:hover{background:#1c2340}
+  .bloco{background:var(--palco2);border:1px solid var(--aco);border-radius:16px;margin-bottom:18px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.35)}
+  .bloco.travado{opacity:.55}
+  .bloco-cab{display:flex;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(90deg,#161f3c,#1d2950);border-bottom:1px solid var(--aco)}
+  .bloco-cab .num{background:var(--ciano);color:#042030;font-weight:bold;width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .bloco.c16 .bloco-cab .num{background:var(--magenta);color:#3a1500}
+  .bloco-cab h3{font-size:1.06rem;color:#fff}
+  .bloco-cab .porto{font-size:.7rem;color:var(--cinza);letter-spacing:1px;text-transform:uppercase}
+  .bloco-corpo{padding:16px}
+  .texto p{margin-bottom:10px}
+  .texto ul{margin:0 0 10px 20px}
+  .texto li{margin-bottom:5px}
+  .texto .destaque{color:var(--ciano);font-weight:bold}
+  .bloco.c16 .texto .destaque{color:var(--magenta)}
+  .olhar{background:#241a0c;border-left:3px solid var(--amarelo,#ffcf33);border-left-color:var(--ambar);padding:8px 12px;margin:0 0 10px;border-radius:0 8px 8px 0;font-size:.92rem}
+  .olhar b{color:var(--ambar)}
+  .cadeado{padding:22px 16px;text-align:center;color:var(--cinza);font-size:.9rem}
+  .perg{background:#12193a;border:1px solid var(--aco);border-radius:12px;padding:12px;margin-top:14px}
+  .perg.red{border-color:var(--vermelho);box-shadow:0 0 0 1px var(--vermelho)}
+  .perg .tag{display:inline-block;font-size:.66rem;text-transform:uppercase;letter-spacing:1px;padding:2px 8px;border-radius:10px;margin-bottom:6px}
+  .tag.conc{background:#0e3a44;color:#8fd9e4}
+  .tag.apl{background:#1d4530;color:#a7e0bf}
+  .perg label{display:block;font-weight:600;margin-bottom:8px}
+  .perg textarea{width:100%;min-height:70px;background:#0a0f20;color:var(--texto);border:1px solid var(--aco2);border-radius:8px;padding:9px;font-family:inherit;font-size:.95rem;resize:vertical}
+  .aviso{margin-top:8px;padding:9px 11px;border-radius:8px;font-size:.85rem;display:none}
+  .aviso.amarelo{display:block;background:#4a3d12;border:1px solid var(--ambar);color:#ffe9ad}
+  .aviso.vermelho{display:block;background:#4a1717;border:1px solid var(--vermelho);color:#ffc9c9}
+  .modelo{margin-top:10px;padding:10px 12px;background:#0e2b1f;border:1px solid var(--verde);border-radius:8px;font-size:.9rem;display:none}
+  .modelo.show{display:block}
+  .modelo .lab{color:#8fe0b4;font-weight:bold;font-size:.78rem;text-transform:uppercase;letter-spacing:1px}
+  .chk{margin-top:10px;font-size:.88rem}
+  .chk .item{display:flex;align-items:center;gap:8px;margin:6px 0;flex-wrap:wrap}
+  .chk .item span{flex:1;min-width:180px}
+  .chk .simnao button{border:1px solid var(--aco2);background:#0a0f20;color:var(--texto);border-radius:6px;padding:4px 10px;margin-left:4px;font-size:.8rem}
+  .chk .simnao button.sim.ativo{background:var(--verde);border-color:var(--verde);color:#04231a}
+  .chk .simnao button.nao.ativo{background:var(--vermelho);border-color:var(--vermelho);color:#fff}
+  .conferir{margin-top:14px;background:var(--verde);color:#04231a;border:none;border-radius:10px;padding:11px 18px;font-size:1rem;font-weight:bold;width:100%}
+  .conferir:disabled{background:#1c2340;color:#6f7794;cursor:not-allowed}
+  .status-bloco{margin-top:10px;text-align:center;font-weight:bold;font-size:.95rem}
+  .prox{margin-top:12px;text-align:center}
+  .prox a{color:var(--ciano);text-decoration:none;font-weight:bold}
+  .peg{background:#3a1414;border:2px solid var(--vermelho);border-radius:16px;padding:16px;margin-top:20px}
+  .peg h3{color:#ffb3b3;margin-bottom:10px}
+  .peg ol{margin-left:20px}
+  .peg li{margin-bottom:7px}
+  .cobertura{background:var(--palco2);border:1px solid var(--aco);border-radius:16px;padding:16px;margin-top:18px}
+  .cobertura h3{color:var(--ciano);margin-bottom:10px}
+  table{width:100%;border-collapse:collapse;font-size:.85rem}
+  th,td{border:1px solid var(--aco);padding:7px 9px;text-align:left}
+  th{background:#161f3c}
+  .revisar{background:#3a2e06;border:2px solid var(--ambar);border-radius:16px;padding:16px;margin-top:18px}
+  .revisar h3{color:var(--ambar);margin-bottom:8px}
+  .revisar ul{margin-left:18px}
+  .relatorio{background:var(--palco2);border:1px dashed var(--ciano);border-radius:14px;padding:16px;margin-top:18px;font-size:.9rem}
+  .relatorio h3{color:var(--ciano);margin-bottom:8px}
+  .trilha-fim{background:linear-gradient(120deg,#122a1f,#163a2a);border:2px solid var(--verde);border-radius:16px;padding:18px;margin-top:18px;text-align:center}
+  .trilha-fim h3{color:#8fe0b4;margin-bottom:8px}
+  .trilha-fim a.btn{display:inline-block;margin-top:8px;background:var(--verde);color:#04231a;text-decoration:none;font-weight:bold;padding:11px 20px;border-radius:10px}
+  .trilha-fim a.btn.off{background:#1c2340;color:#6f7794;pointer-events:none}
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:50;align-items:center;justify-content:center;padding:16px}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--palco2);border:1px solid var(--ciano);border-radius:14px;padding:20px;max-width:420px;text-align:center}
+  .modal p{margin-bottom:14px}
+  .modal button{background:var(--ciano);color:#042030;border:none;border-radius:8px;padding:9px 16px;font-weight:bold}
+  .rodape{text-align:center;color:var(--cinza);font-size:.8rem;margin-top:24px}
+  .bloco.c13 .bloco-cab .num{background:var(--ciano);color:#042030}
+  .bloco.c14 .bloco-cab .num, .bloco.c15 .bloco-cab .num{background:var(--magenta);color:#3a1500}
+  .bloco.c19 .bloco-cab .num, .bloco.c20 .bloco-cab .num{background:var(--verde);color:#04231a}
+  .bloco.c14 .texto .destaque, .bloco.c15 .texto .destaque{color:var(--magenta)}
+  .bloco.c19 .texto .destaque, .bloco.c20 .texto .destaque{color:var(--verde)}
+  .selo-foco{display:inline-block;background:#3a2e06;color:var(--ambar);border:1px solid var(--ambar);border-radius:10px;padding:0 7px;font-size:.66rem;letter-spacing:.5px;text-transform:none;margin-left:4px}
+</style>
+</head>
+<body>
+<header>
+  <div class="selo">Balão-Sonda · Geografia 6º ano · CCF</div>
+  <h1>📖 Leitura Guiada</h1>
+  <p>Caps. 13, 19 e 20 + abertura dos caps. 14 e 15 · Prova 29/10 · Callis Geografia 6 – Livro 2</p>
+</header>
+
+<div class="wrap">
+  <nav class="barra-nav" id="nav">
+    <a class="on" href="leitura-guiada.html">📖 Leitura Guiada</a>
+    <a href="quiz.html" data-etapa="quiz">🎯 Quiz</a>
+    <a href="resumo.html" data-etapa="resumo">🗺️ Resumo</a>
+    <a href="simulado.html" data-etapa="simulado">📝 Simulado</a>
+    <a href="index.html">🏠 Início</a>
+  </nav>
+
+  <div class="intro">
+    <h2>🎈 Como funciona o voo do Balão-Sonda</h2>
+    <p>Você é a pessoa que comanda um <b>balão meteorológico</b>: ele decola, atravessa a atmosfera medindo o tempo, passa por cima das cidades e do Oceano Pacífico e termina o voo seguindo os rios até a usina. São <b>13 paradas</b>: as <b>7 primeiras</b> são do clima (Capítulo 13 e as aberturas dos Capítulos 14 e 15) e as <b>últimas</b>, da água (Capítulos 19 e 20). As paradas com o selo <span class="selo-foco">⭐ foco da revisão</span> são os pontos que a revisão da professora mais destacou.</p>
+    <ol>
+      <li>Leia a parada com calma. Tudo aqui vem do seu livro, e as páginas estão no topo de cada parada.</li>
+      <li>Responda as 3 perguntas <b>escrevendo com as suas palavras</b>. Não vale copiar do texto.</li>
+      <li>Clique em <b>Conferir</b>: aparecem a resposta-modelo e uma autoavaliação Sim/Não.</li>
+      <li>Com as 13 paradas conferidas e a autoavaliação respondida, o <b>🎯 Quiz destrava</b>.</li>
+    </ol>
+  </div>
+
+  <div class="painel">
+    <span id="salvo">💾 Progresso salvo automaticamente.</span>
+    <div class="btns">
+      <button class="mini" onclick="exportar()">📥 Exportar</button>
+      <button class="mini" onclick="document.getElementById('imp').click()">📤 Importar</button>
+      <input type="file" id="imp" accept="application/json" style="display:none" onchange="importar(event)">
+      <button class="mini" onclick="pedirZerar()">🗑️ Zerar tudo</button>
+    </div>
+  </div>
+
+  <div id="blocos"></div>
+
+  <div class="peg">
+    <h3>⚠️ 12 Pegadinhas da Prova (não caia nelas!)</h3>
+    <ol>
+      <li><b>Tempo ≠ clima.</b> Tempo é o AGORA (“hoje está nublado”). Clima é o padrão de MUITOS ANOS (“o inverno do Centro-Oeste é seco”).</li>
+      <li><b>Pressão atmosférica é ELEMENTO climático</b> (junto com temperatura e umidade), não fator. Fatores: latitude, altitude, maritimidade, continentalidade, correntes marítimas e massas de ar.</li>
+      <li><b>Mais alto = mais frio e menor pressão.</b> Ficar “mais perto do Sol” não esquenta: o ar lá em cima é rarefeito e segura menos calor.</li>
+      <li><b>Na altitude o oxigênio não “acaba”:</b> a porcentagem continua parecida; o que diminui é a pressão, e por isso entram menos moléculas de oxigênio a cada respiração.</li>
+      <li><b>Corrente FRIA = seco</b> (ajuda a formar desertos, como o Atacama). <b>Corrente QUENTE = úmido.</b></li>
+      <li><b>Maritimidade = MENOR amplitude térmica</b> (perto do mar). <b>Continentalidade = MAIOR amplitude</b> (interior).</li>
+      <li><b>Ilha de calor ≠ inversão térmica.</b> Ilha de calor: a cidade fica mais quente que o entorno. Inversão: o ar frio fica preso embaixo de uma “tampa” de ar quente e segura a poluição (mais comum no inverno).</li>
+      <li><b>El Niño = águas do Pacífico MAIS QUENTES; La Niña = MAIS FRIAS.</b> No Brasil, o El Niño traz seca no Nordeste e na Amazônia e chuva no Sul (não o contrário).</li>
+      <li><b>Enchente não é só natural:</b> a cheia é natural, mas a enchente é um fenômeno social, piorada pelo asfalto (impermeabilização) e pelo lixo. A Meteorologia avisa, mas não acaba com ela.</li>
+      <li><b>Rio de PLANALTO = energia; rio de PLANÍCIE = navegação.</b></li>
+      <li><b>Montante</b> = para o lado da nascente; <b>jusante</b> = para o lado da foz. A margem direita é definida <b>olhando para a foz</b>.</li>
+      <li><b>Hidrelétrica é renovável, mas não “sem impacto”:</b> alaga áreas, desloca povos, ameaça espécies e a vegetação alagada libera metano.</li>
+    </ol>
+  </div>
+
+  <div class="cobertura">
+    <h3>🧭 Cobertura: Tópico → Parada</h3>
+    <table>
+      <thead><tr><th>Tópico da prova</th><th>Páginas (Callis Geografia 6 – L2)</th><th>Parada</th></tr></thead>
+      <tbody>
+        <tr><td>Atmosfera, composição e efeito estufa</td><td>8</td><td>1</td></tr>
+        <tr><td>Camadas da atmosfera e camada de ozônio</td><td>9–13</td><td>2</td></tr>
+        <tr><td>⭐ Tempo × clima; Meteorologia × Climatologia</td><td>6, 14, 17</td><td>3</td></tr>
+        <tr><td>⭐ Elementos climáticos (pressão, temperatura, umidade), instrumentos e climograma</td><td>14–17</td><td>4</td></tr>
+        <tr><td>⭐ Fatores climáticos: latitude e altitude</td><td>18–20, 26</td><td>5</td></tr>
+        <tr><td>⭐ Maritimidade/continentalidade, correntes marítimas (Atacama) e massas de ar</td><td>21–24, 98</td><td>6</td></tr>
+        <tr><td>⭐ Uso do solo e ilha de calor</td><td>25, 44</td><td>7</td></tr>
+        <tr><td>⭐ Cap. 14: mudanças climáticas, aquecimento global, El Niño (atividades p. 35)</td><td>28–36</td><td>8</td></tr>
+        <tr><td>⭐ Cap. 15: enchentes (p. 43), chuva ácida, inversão térmica (p. 47), áreas rurais (p. 48)</td><td>40–50</td><td>9</td></tr>
+        <tr><td>⭐ Oceanos, mares, movimentos das águas e oceanos sob pressão</td><td>96–99, 112</td><td>10</td></tr>
+        <tr><td>⭐ Rios: regime, partes, foz, planalto × planície</td><td>99–101, 123</td><td>11</td></tr>
+        <tr><td>Aquíferos, ciclo hidrológico, distribuição e usos da água</td><td>101–110</td><td>12</td></tr>
+        <tr><td>⭐ Cap. 20: hidrelétricas (Amazônia), transporte fluvial e irrigação</td><td>114–123</td><td>13</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="revisar" id="revisar" style="display:none">
+    <h3>🔁 Para revisar antes da prova</h3>
+    <ul id="revisar-lista"></ul>
+  </div>
+
+  <div class="relatorio">
+    <h3>📊 Para os pais (resumo desta leitura)</h3>
+    <div id="rel-conteudo">Conforme as paradas forem sendo conferidas, o resumo aparece aqui.</div>
+  </div>
+
+  <div class="trilha-fim" id="trilha-fim">
+    <h3>🔒 Próxima etapa: Quiz</h3>
+    <p id="trilha-fim-txt">O Quiz destrava quando as 13 paradas estiverem conferidas e a autoavaliação respondida.</p>
+    <a class="btn off" id="btn-prox" href="quiz.html">🎯 Ir para o Quiz</a>
+  </div>
+
+  <div class="rodape">Feito com carinho para o jovem aprendiz. 🎈 Bom voo e boa prova!</div>
+</div>
+
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <p id="modal-txt"></p>
+    <button onclick="fecharModal()" id="modal-ok">Ok</button>
+    <button class="mini" onclick="fecharModal()" id="modal-cancel" style="display:none;margin-left:8px">Cancelar</button>
+  </div>
+</div>
+
+<script>
+/* ====== TRILHA COM CADEADOS (módulo comum do kit) ====== */
+var KIT='balao_sonda_geo6';
+var TRILHA=[
+ {id:'leitura', chave:KIT+'_leitura_v1', nome:'Leitura Guiada', arquivo:'leitura-guiada.html', emoji:'📖'},
+ {id:'quiz', chave:KIT+'_quiz_v1', nome:'Quiz', arquivo:'quiz.html', emoji:'🎯'},
+ {id:'resumo', chave:KIT+'_resumo_v1', nome:'Resumo', arquivo:'resumo.html', emoji:'🗺️'},
+ {id:'simulado', chave:KIT+'_simulado_v1', nome:'Simulado', arquivo:'simulado.html', emoji:'📝'}
+];
+function lerJSON(k){ try{ var s=localStorage.getItem(k); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function trilhaLiberada(){ var t=lerJSON(KIT+'_trilha_v1'); return !!(t&&t.liberadoPelosPais); }
+function etapaConcluida(id){ var e=TRILHA.filter(function(t){return t.id===id;})[0]; var d=lerJSON(e.chave); return !!(d&&d.concluido); }
+function podeAbrir(id){ var idx=TRILHA.map(function(t){return t.id;}).indexOf(id); if(idx<=0||trilhaLiberada()) return true; return etapaConcluida(TRILHA[idx-1].id); }
+function marcarNav(){
+  var links=document.querySelectorAll('#nav a[data-etapa]');
+  for(var i=0;i<links.length;i++){ var id=links[i].getAttribute('data-etapa'); if(!podeAbrir(id)){ links[i].classList.add('lock'); links[i].textContent='🔒 '+links[i].textContent.replace('🔒 ',''); links[i].setAttribute('title','Ainda trancado'); } else { links[i].classList.remove('lock'); links[i].textContent=links[i].textContent.replace('🔒 ',''); } }
+}
+
+/* ====== PARADAS DO VOO (conteúdo do livro Callis Geografia 6 – Livro 2: caps. 13, 14, 15, 19 e 20) ====== */
+var BLOCOS = [
+ {
+  porto:"Parada 1 · Capítulo 13 · p. 8", emoji:"🎈", u:"c13",
+  titulo:"Decolagem: a atmosfera que envolve a Terra",
+  texto:[
+   "O balão-sonda sobe por dentro da <span class='destaque'>atmosfera</span>: a camada de gases que envolve a Terra e que contém o <b>oxigênio</b>, essencial para a nossa sobrevivência. Ela nos <b>protege da radiação ultravioleta</b> (filtrada pela camada de ozônio) e de partículas vindas do espaço, e ainda <b>guarda o calor do Sol</b>, o que mantém a vida no planeta.",
+   "Quase toda a atmosfera é formada por dois gases: <span class='destaque'>nitrogênio (78%)</span> e <span class='destaque'>oxigênio (21%)</span> — juntos, 99%. O 1% que sobra tem vapor de água, <b>dióxido de carbono (gás carbônico)</b>, argônio e outros. O dióxido de carbono aparece em pouca quantidade, mas é essencial para manter o planeta aquecido.",
+   "Esse aquecimento natural se chama <span class='destaque'>efeito estufa</span>: a atmosfera deixa a radiação do Sol entrar e aquecer a Terra, mas <b>impede que parte do calor escape</b> de volta para o espaço. Funciona como uma estufa de plantas: o vidro deixa a luz entrar, mas segura o calor lá dentro.",
+   "<div class='olhar'><b>Olhar de prova:</b> o efeito estufa <b>natural é bom</b> — sem ele a Terra seria fria demais para a vida. O problema, que você verá na Parada 8, é quando ele fica <b>intensificado</b> pelo excesso de gases.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Quais são os dois gases que mais aparecem na atmosfera, com as suas porcentagens? E por que o gás carbônico é importante, mesmo sendo pouco?",modelo:"Nitrogênio (78%) e oxigênio (21%), que juntos somam 99%. O gás carbônico (dióxido de carbono) existe em pequena quantidade, mas ajuda a segurar o calor e manter o planeta aquecido.",chk:["Citei nitrogênio (78%) e oxigênio (21%)?","Disse que o gás carbônico ajuda a manter o planeta aquecido?"]},
+   {tag:"apl",q:"Um colega disse: 'a atmosfera é feita só de oxigênio, e o efeito estufa é sempre uma coisa ruim'. Corrija as duas partes da frase dele.",modelo:"A atmosfera não é só oxigênio: tem principalmente nitrogênio (78%) e oxigênio (21%), além de outros gases. E o efeito estufa natural é bom: ele segura parte do calor e deixa a Terra quente o suficiente para a vida. Ruim é quando ele fica intensificado.",chk:["Corrigi a composição (nitrogênio é o principal, não só oxigênio)?","Expliquei que o efeito estufa natural é bom para a vida?"]},
+   {tag:"apl",q:"Explique para uma criança mais nova, com um exemplo seu do dia a dia, como funciona o efeito estufa.",modelo:"O Sol aquece a Terra e a atmosfera funciona como uma tampa que segura parte desse calor, sem deixar tudo escapar para o espaço. É parecido com uma estufa de plantas (ou um lugar fechado com vidro no sol): a luz entra, mas o calor fica preso lá dentro.",chk:["Falei que a luz/calor do Sol entra e parte do calor fica preso?","Usei uma comparação (estufa ou outro exemplo) que faz sentido?"]}
+  ]
+ },
+ {
+  porto:"Parada 2 · Capítulo 13 · pp. 9–13", emoji:"🛰️", u:"c13",
+  titulo:"Subindo pelas camadas da atmosfera",
+  texto:[
+   "A atmosfera é dividida em <b>camadas</b>, de acordo com a distância da superfície, a densidade e os gases. A primeira é a <span class='destaque'>troposfera</span>: é nela que vivemos e que acontecem os fenômenos do tempo, como <b>chuva, neve e tornados</b>. Ela concentra cerca de <b>dois terços</b> dos gases, por isso é a camada <b>mais densa</b> — e a mais importante para a Meteorologia.",
+   "Na <span class='destaque'>estratosfera</span> fica a <span class='destaque'>camada de ozônio</span>, que filtra a maior parte da radiação ultravioleta. Substâncias de <b>sprays de aerossol</b> e de <b>antigos aparelhos de refrigeração</b> destruíram parte do ozônio (o famoso “buraco”). Em <b>1987</b>, o <b>Protocolo de Montreal</b>, assinado por cerca de 150 países, mandou substituir essas substâncias — e a camada vem se <b>recuperando lentamente</b>.",
+   "Subindo mais: a <span class='destaque'>mesosfera</span> (entre 50 km e 80 km), com gases cada vez menos densos; a <span class='destaque'>termosfera</span> (de 80 km até cerca de 700 km), com temperaturas altíssimas, mas tão poucas moléculas que o calor não é sentido; e a <span class='destaque'>exosfera</span>, de hélio e hidrogênio, que chega a cerca de 10 000 km — ali ficam muitos <b>satélites artificiais</b>, por causa da baixa resistência do ar.",
+   "<div class='olhar'><b>Ordem das camadas (de baixo para cima):</b> troposfera → estratosfera (ozônio) → mesosfera → termosfera → exosfera.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Em qual camada acontecem a chuva, a neve e os tornados? Por que ela é a mais densa?",modelo:"Na troposfera, a camada onde vivemos. Ela é a mais densa porque concentra cerca de dois terços dos gases da atmosfera.",chk:["Respondi troposfera?","Expliquei que ela concentra a maior parte (dois terços) dos gases?"]},
+   {tag:"apl",q:"Uma empresa imaginária vai colocar um satélite em órbita. Em qual camada ele deve ficar e por quê?",modelo:"Na exosfera, a última camada, porque lá a resistência do ar é muito baixa, e é onde ficam muitos satélites artificiais.",chk:["Respondi exosfera?","Justifiquei com a baixa resistência do ar?"]},
+   {tag:"apl",q:"Explique para um colega por que o “buraco” na camada de ozônio está diminuindo e por que isso é bom.",modelo:"Porque, desde o Protocolo de Montreal (1987), os países trocaram as substâncias que destruíam o ozônio (de sprays e geladeiras antigas) por outras mais seguras. Isso é bom porque o ozônio filtra a radiação ultravioleta, que faz mal aos seres vivos.",chk:["Citei a troca das substâncias / o Protocolo de Montreal?","Falei que o ozônio protege contra a radiação ultravioleta?"]}
+  ]
+ },
+ {
+  porto:"Parada 3 · Capítulo 13 · pp. 6, 14 e 17", emoji:"🌦️", u:"c13", foco:true,
+  titulo:"Painel do Tempo: tempo atmosférico × clima",
+  texto:[
+   "Esta é a diferença que mais cai em prova. O <span class='destaque'>tempo atmosférico</span> é a condição da atmosfera <b>em um momento</b>: se está chovendo, ventando, nublado, quente <b>agora</b>. O <span class='destaque'>clima</span> é o conjunto de <b>padrões observados em um lugar ao longo de muitos anos</b> — ele é definido a partir de registros do tempo feitos durante <b>várias décadas</b>.",
+   "Duas ciências estudam a atmosfera. A <span class='destaque'>Meteorologia</span> estuda os fenômenos atmosféricos para <b>prever</b> as condições do tempo — ajuda a escolher a roupa, decidir uma viagem ou saber se vai chover numa plantação. A <span class='destaque'>Climatologia</span> estuda a relação desses fenômenos com outros aspectos naturais e sociais, como a <b>ocupação do solo, a vegetação, o relevo e a ação humana</b>.",
+   "Exemplos do livro: “Hoje o céu amanheceu nublado” e “Como está quente agora!” falam do <b>tempo</b>. “O inverno da região Centro-Oeste é seco” e “Em dezembro, sempre neva no norte da Europa” falam do <b>clima</b>. Por isso, é muito <b>mais fácil o tempo mudar</b> do que o clima.",
+   "<div class='olhar'><b>Dica da revisão:</b> TEMPO responde “como está a atmosfera AGORA?”. CLIMA responde “como ela costuma ser, depois de MUITOS ANOS de observação?”. Palavras como <i>hoje, agora, amanhã</i> indicam tempo; <i>sempre, costuma, todo inverno</i> indicam clima.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Com as suas palavras, qual é a diferença entre tempo atmosférico e clima?",modelo:"Tempo é como a atmosfera está num momento (agora, hoje). Clima é o padrão que se repete num lugar, descoberto observando o tempo por muitos anos.",chk:["Disse que tempo é o momento (agora)?","Disse que clima é o padrão de muitos anos?"]},
+   {tag:"apl",q:"Classifique e justifique: (A) “Amanhã à tarde vai chover forte na minha cidade.” (B) “Na minha cidade, todo verão é quente e chuvoso.”",modelo:"(A) é tempo, porque fala de um momento específico (amanhã à tarde). (B) é clima, porque descreve o que se repete todo verão, ao longo dos anos.",chk:["Classifiquei A como tempo e B como clima?","Justifiquei pelo momento × repetição ao longo dos anos?"]},
+   {tag:"apl",q:"Um agricultor precisa (1) escolher qual cultura plantar na região e (2) decidir se colhe amanhã, antes de uma tempestade. Qual ciência ajuda em cada caso? Explique.",modelo:"(1) A Climatologia, porque ela conhece o clima da região (o padrão de muitos anos), que define o que dá para plantar. (2) A Meteorologia, porque ela faz a previsão do tempo dos próximos dias e avisa da tempestade.",chk:["Liguei a escolha da cultura à Climatologia?","Liguei a previsão da tempestade à Meteorologia?"]}
+  ]
+ },
+ {
+  porto:"Parada 4 · Capítulo 13 · pp. 14–17", emoji:"🧭", u:"c13", foco:true,
+  titulo:"Instrumentos de bordo: elementos do clima e climograma",
+  texto:[
+   "Os <span class='destaque'>elementos climáticos</span> são a <b>pressão atmosférica</b>, a <b>temperatura</b> e a <b>umidade</b>. Eles influenciam as chuvas, os ventos, a nebulosidade e as ondas de calor e de frio — e todos podem ser medidos.",
+   "<span class='destaque'>Pressão atmosférica</span> (o peso do ar sobre a superfície) é medida pelo <b>barômetro</b>. Quanto <b>mais alto</b> o lugar, <b>menos ar</b> existe acima dele e <b>menor a pressão</b>; nas áreas baixas, a pressão é maior. Lá no alto o ar é <b>rarefeito</b> — por isso alpinistas levam cilindros de ar. No estádio de El Alto (Bolívia), a mais de 4 000 m, os times brasileiros perdem muito: o oxigênio continua sendo cerca de 21% do ar, mas, como a pressão é menor, <b>entram menos moléculas de oxigênio</b> a cada respiração.",
+   "<span class='destaque'>Temperatura</span> é medida pelo <b>termômetro</b>. A <b>amplitude térmica</b> é a <b>diferença entre a máxima e a mínima</b> de um período; a <b>temperatura média</b> é calculada com várias medições. A <span class='destaque'>umidade</span> (vapor de água no ar) é medida pelo <b>higrômetro</b>; lugares mais úmidos têm <b>menor amplitude térmica</b>, porque a água guarda calor. Quando o vapor condensa, vem a <b>precipitação</b> (chuva, granizo ou neve), medida pelo <b>pluviômetro</b>.",
+   "O <span class='destaque'>climograma</span> é um gráfico que mostra, <b>mês a mês</b>, as <b>médias de temperatura</b> e o <b>total de chuvas</b> de um lugar ao longo do ano. O de Belém (PA) mostra muita chuva e calor o ano todo, com mais chuva nos cinco primeiros meses. Ele ajuda até a planejar uma viagem.",
+   "<div class='olhar'><b>Ler gráficos e mapas (revisão):</b> no MAPA, leia sempre <b>título, cores e legenda</b>. No CLIMOGRAMA, olhe os <b>meses</b>, a <b>chuva</b> e a <b>temperatura</b>.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Ligue cada elemento ao seu instrumento: pressão, temperatura, umidade e chuva (precipitação).",modelo:"Pressão → barômetro; temperatura → termômetro; umidade → higrômetro; chuva (precipitação) → pluviômetro.",chk:["Acertei barômetro (pressão) e termômetro (temperatura)?","Acertei higrômetro (umidade) e pluviômetro (chuva)?"]},
+   {tag:"apl",q:"Numa cidade, a máxima do dia foi 31 °C e a mínima foi 17 °C. Qual foi a amplitude térmica? Mostre a conta.",modelo:"A amplitude térmica é a diferença entre a máxima e a mínima: 31 − 17 = 14 °C.",chk:["Fiz máxima menos mínima?","Cheguei a 14 °C?"]},
+   {tag:"apl",q:"Explique para um amigo por que um jogador se cansa mais jogando numa cidade a 4 000 metros de altitude.",modelo:"Porque, no alto, a pressão atmosférica é menor e o ar é rarefeito. A porcentagem de oxigênio continua parecida, mas, com a pressão menor, entram menos moléculas de oxigênio a cada respiração, e o corpo se cansa mais.",chk:["Falei que no alto a pressão é menor / o ar é rarefeito?","Expliquei que entram menos moléculas de oxigênio (não que o oxigênio 'acaba')?"]}
+  ]
+ },
+ {
+  porto:"Parada 5 · Capítulo 13 · pp. 18–20 e 26", emoji:"⛰️", u:"c13", foco:true,
+  titulo:"Rosa dos Fatores: latitude e altitude",
+  texto:[
+   "Por que a Amazônia é quente e chuvosa o ano todo, e o Canadá tem neve? Por causa dos <span class='destaque'>fatores climáticos</span>: as características do lugar que definem o seu clima. São seis: <b>latitude, altitude, maritimidade, continentalidade, correntes marítimas e massas de ar</b>.",
+   "<span class='destaque'>Latitude</span> é a distância, em graus, de um lugar até a <b>Linha do Equador</b>. Como a Terra é arredondada, os raios do Sol chegam de jeito desigual: <b>perto do Equador</b> eles chegam com <b>menor inclinação</b> e aquecem mais. Resumo: <b>baixas latitudes = climas quentes</b>; <b>altas latitudes = climas frios</b>; latitudes médias = climas temperados.",
+   "<span class='destaque'>Altitude</span> é a distância vertical de um ponto até o <b>nível do mar</b>. A superfície aquecida pelo Sol solta calor, e parte dele é segurada pelos gases da atmosfera. Nos lugares altos o ar é <b>menos denso</b> (menos gases), então <b>segura menos calor</b> e é <b>mais frio</b>. Daí o <b>clima de montanha</b> (Himalaia, Andes, Alpes). O vulcão <b>Chimborazo</b> (6 263 m), no Equador, fica perto da Linha do Equador e mesmo assim tem <b>neve no topo</b>.",
+   "Exemplo do livro: <b>Taubaté</b> e <b>Campos do Jordão</b> (SP) ficam a menos de 50 km uma da outra, mas a média anual de Taubaté é 21,7 °C e a de Campos do Jordão, na Serra da Mantiqueira, é só 14,8 °C. A diferença é a <b>altitude</b>.",
+   "<div class='olhar'><b>Regra da revisão:</b> ↑ altitude → ↓ temperatura e ↓ pressão. <b>Pegadinha:</b> pressão atmosférica é <b>ELEMENTO</b> climático, não fator (está numa atividade do livro, p. 26).</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"O que é latitude e como ela influencia a temperatura de um lugar?",modelo:"Latitude é a distância, em graus, até a Linha do Equador. Quanto mais perto do Equador (baixa latitude), mais diretos chegam os raios do Sol e mais quente é; quanto mais longe (alta latitude), mais frio.",chk:["Defini latitude como distância até o Equador (em graus)?","Disse que perto do Equador é mais quente e longe é mais frio?"]},
+   {tag:"apl",q:"O Chimborazo fica bem perto da Linha do Equador, onde costuma fazer calor. Explique por que há neve no topo dele.",modelo:"Porque o topo é muito alto (mais de 6 000 m). Na altitude o ar é menos denso, segura menos calor e a temperatura cai. A altitude faz o topo ser frio, mesmo estando numa latitude quente.",chk:["Usei a altitude para explicar o frio?","Expliquei que o ar mais rarefeito segura menos calor?"]},
+   {tag:"apl",q:"Numa prova aparece: “A pressão atmosférica é um fator climático”. Está certo? Explique a diferença entre elemento e fator climático.",modelo:"Está errado: a pressão atmosférica é um ELEMENTO climático, junto com a temperatura e a umidade (é o que se mede). Fatores climáticos são as características do lugar que definem o clima: latitude, altitude, maritimidade, continentalidade, correntes marítimas e massas de ar.",chk:["Disse que a pressão é elemento, não fator?","Citei exemplos de fatores (latitude, altitude etc.)?"]}
+  ]
+ },
+ {
+  porto:"Parada 6 · Capítulo 13 · pp. 21–24 e 98", emoji:"🌊", u:"c13", foco:true,
+  titulo:"Sobre o mar: maritimidade, correntes e massas de ar",
+  texto:[
+   "A água <b>esquenta e esfria mais devagar</b> que a terra. Por isso, quem mora perto do oceano sente <b>menos variação</b> de temperatura: é a <span class='destaque'>maritimidade</span> (<b>menor amplitude térmica</b>). No interior do continente a superfície esquenta e esfria rápido: é a <span class='destaque'>continentalidade</span> (<b>maior amplitude térmica</b>). Exemplos do livro: <b>Vitória (ES)</b> sofre maritimidade; <b>Campo Grande (MS)</b>, continentalidade.",
+   "As <span class='destaque'>correntes marítimas</span> são grandes fluxos de água, como <b>rios dentro do mar</b>, com caminhos definidos pelo <b>contorno dos continentes</b> e pela <b>rotação da Terra</b>. As <b>quentes</b> (que partem das zonas tropicais) <b>aumentam a evaporação</b> e deixam o litoral <b>mais úmido</b> — como a <b>Corrente do Brasil</b> e a <b>Corrente do Golfo</b>, que deixa o norte da Europa mais quente e úmido. As <b>frias</b> (que vêm das regiões polares) <b>diminuem a evaporação</b>, deixam o lugar <b>mais seco</b> e ajudam a formar desertos: a <b>Corrente de Humboldt</b> colabora para o <b>Deserto do Atacama</b> (Chile), e a das <b>Canárias</b>, para a seca do <b>Saara</b>.",
+   "<div class='olhar'><b>Por que o Atacama é tão seco? (revisão)</b> Três fatores juntos reduzem a formação e a chegada de chuvas: a <b>corrente fria de Humboldt</b>, a <b>barreira da Cordilheira dos Andes</b> e a <b>alta pressão subtropical</b>.</div>",
+   "As <span class='destaque'>massas de ar</span> são grandes porções de ar que se movem de áreas de <b>alta pressão</b> para áreas de <b>baixa pressão</b>, levando a temperatura e a umidade do lugar onde se formaram. São classificadas pela latitude (equatorial, tropical, polar) e pelo local (continental ou marítima). A <b>Massa Tropical Atlântica (mTa)</b> nasce no sul do Oceano Atlântico, perto do Trópico de Capricórnio, e traz <b>ar quente e úmido</b> para a costa brasileira."
+  ],
+  perguntas:[
+   {tag:"conc",q:"Qual é a diferença entre uma corrente marítima quente e uma fria, no clima do litoral?",modelo:"A corrente quente aumenta a evaporação e deixa o litoral mais úmido. A corrente fria diminui a evaporação, deixa o lugar mais seco e pode até ajudar a formar desertos.",chk:["Disse que a quente aumenta a evaporação / deixa mais úmido?","Disse que a fria diminui a evaporação / deixa mais seco?"]},
+   {tag:"apl",q:"Explique, como se fosse um guia turístico, por que o Deserto do Atacama quase não tem chuva.",modelo:"Porque ali se juntam três coisas: a corrente fria de Humboldt, que diminui a evaporação do mar; a Cordilheira dos Andes, que funciona como barreira para a umidade; e a alta pressão subtropical. Juntas, elas reduzem a formação e a chegada das chuvas.",chk:["Citei a corrente fria de Humboldt?","Citei os Andes e/ou a alta pressão como fatores que barram a chuva?"]},
+   {tag:"apl",q:"Duas cidades imaginárias estão na mesma latitude: Praia Azul, no litoral, e Serra Seca, bem no interior. Qual terá maior amplitude térmica? Por quê?",modelo:"Serra Seca, no interior, por causa da continentalidade: a terra esquenta e esfria rápido. Praia Azul tem maritimidade: a água esquenta e esfria devagar e deixa a temperatura mais estável.",chk:["Respondi que a cidade do interior tem maior amplitude?","Expliquei pela diferença de aquecimento da água e da terra?"]}
+  ]
+ },
+ {
+  porto:"Parada 7 · Capítulos 13 e 15 · pp. 25 e 44", emoji:"🏙️", u:"c15", foco:true,
+  titulo:"Céu da Cidade: o uso do solo e a ilha de calor",
+  texto:[
+   "Quando os raios do Sol chegam ao chão, eles podem ser <b>refletidos</b> ou <b>absorvidos</b>. Quanto mais absorvidos, mais o lugar esquenta. Isso depende da cor e do material da superfície: o <span class='destaque'>asfalto</span> e o <span class='destaque'>concreto</span> das cidades absorvem muita energia e a devolvem como <b>calor</b> para a atmosfera.",
+   "Já as áreas com <span class='destaque'>vegetação</span> (matas, parques, praças arborizadas) também absorvem a energia do Sol, mas <b>não aquecem o ambiente</b>, porque as árvores usam essa energia nos seus <b>processos vitais</b>, em vez de devolvê-la como calor.",
+   "Por isso, nas áreas muito urbanizadas acontece a <span class='destaque'>ilha de calor</span>: saindo de um lugar arborizado, com poucas casas e carros, e chegando a um lugar com muita gente, carros, fábricas e prédios, a <b>temperatura vai aumentando</b>. O nome vem dos <b>mapas de isotermas</b> (“iso” = igual; “terma” = temperatura), que mostram essas áreas quentes com <b>formato de ilhas</b>.",
+   "<div class='olhar'><b>Resumo da revisão:</b> ASFALTO + CONCRETO = mais calor acumulado. ÁRVORES + SOMBRA = mais resfriamento.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"O que é a ilha de calor e de onde vem esse nome?",modelo:"É o aumento da temperatura nas áreas muito urbanizadas (com asfalto, concreto, prédios, carros e fábricas) em relação às áreas ao redor. O nome vem dos mapas de isotermas, que mostram essas áreas quentes em forma de ilhas.",chk:["Disse que é a área urbana mais quente que o entorno?","Expliquei o nome pelos mapas de isotermas (formato de ilha)?"]},
+   {tag:"apl",q:"A prefeitura de uma cidade imaginária quer deixar o centro menos quente. Sugira duas ações e explique cada uma com o que você leu.",modelo:"1) Plantar árvores e criar praças e parques: a vegetação usa a energia do Sol nos seus processos vitais e não devolve calor. 2) Trocar parte das áreas de asfalto e concreto por áreas verdes: esses materiais absorvem muito calor e esquentam o ar.",chk:["Sugeri mais vegetação (árvores, parques, praças)?","Expliquei por que o asfalto/concreto esquenta e a vegetação não?"]},
+   {tag:"apl",q:"Num mapa de isotermas de uma cidade, o centro aparece em vermelho e um grande parque aparece em azul. Explique o que isso mostra.",modelo:"Mostra que o centro, com muito asfalto, concreto, prédios e carros, é mais quente (ilha de calor), e que o parque, com vegetação, é mais fresco, porque as árvores não devolvem o calor para o ar.",chk:["Interpretei vermelho = mais quente e azul = mais fresco?","Liguei o centro quente ao asfalto/concreto e o parque fresco à vegetação?"]}
+  ]
+ },
+ {
+  porto:"Parada 8 · Capítulo 14 · pp. 28–36", emoji:"🌡️", u:"c14", foco:true,
+  titulo:"Alerta no Pacífico: mudanças climáticas e El Niño",
+  texto:[
+   "As <span class='destaque'>mudanças climáticas</span> sempre aconteceram na história da Terra — como a última <b>Era Glacial</b>, quando a temperatura média caiu. A novidade é que, para muitos cientistas, hoje elas estão <b>mais rápidas</b>, em grande parte pela <b>ação humana</b>.",
+   "O <span class='destaque'>aquecimento global</span> é o aumento da temperatura média do planeta. Segundo essa teoria (o livro lembra que ainda há discussão), ele está ligado ao crescimento das <b>indústrias e cidades</b> e às <b>queimadas</b>, que lançam mais <b>gás carbônico (CO₂)</b> e <b>intensificam o efeito estufa</b>. Consequências: <b>derretimento das calotas polares</b> e do gelo das montanhas, <b>aumento do nível do mar</b>, mais <b>eventos extremos</b> (furacões, tornados) e <b>menos chuva em lugares já secos</b>, podendo levar à desertificação. Por ser causado pela humanidade, ele é chamado de <b>antropogênico</b> (“antropo” = humanidade; “gênico” = origem).",
+   "O <span class='destaque'>El Niño</span> é o <b>aquecimento das águas do Oceano Pacífico</b> perto da América do Sul (Peru e Equador). Essas águas costumam ser frias e cheias de peixes; com o El Niño, os <b>peixes diminuem</b> — foi assim que os pescadores do Peru perceberam o fenômeno, perto do <b>Natal</b> (“El Niño” = “o menino”, o Menino Jesus). Ele ocorre em <b>ciclos irregulares de 2 a 7 anos</b>, e suas causas ainda não são claras.",
+   "<b>No Brasil, com El Niño:</b> <span class='destaque'>menos chuva no Nordeste e na Amazônia</span> (mais queimadas); <span class='destaque'>mais calor no inverno do Sudeste</span>; <span class='destaque'>mais chuva no Sul</span>. No mundo: invernos chuvosos na Califórnia, no norte do Chile e no Equador; secas nas Filipinas, Indonésia e Tailândia; invernos muito frios no Leste Europeu; menos furacões no Atlântico e mais ciclones no Pacífico.",
+   "<div class='olhar'><b>El Niño × La Niña (revisão):</b> no El Niño as águas ficam <b>mais quentes</b> que a média; na La Niña, <b>mais frias</b> que a média. Os dois influenciam chuvas e temperaturas, mas os efeitos variam por região e estação: são <b>tendências, não regras fixas</b>.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"O que acontece no Oceano Pacífico durante o El Niño, e de onde vem esse nome?",modelo:"As águas do Pacífico perto da América do Sul (Peru e Equador), que costumam ser frias, ficam mais quentes, e os peixes diminuem. O nome foi dado por pescadores peruanos, porque o fenômeno aparecia perto do Natal: “El Niño” é “o menino”, o Menino Jesus.",chk:["Disse que as águas do Pacífico esquentam?","Expliquei a origem do nome (pescadores, Natal, Menino Jesus)?"]},
+   {tag:"apl",q:"Imagine um ano de El Niño forte. Escreva uma “previsão” para o Sul, o Nordeste e o Sudeste do Brasil.",modelo:"No Sul, mais chuva (risco de enchentes). No Nordeste (e na Amazônia), menos chuva, com seca e mais queimadas. No Sudeste, temperaturas mais altas no inverno.",chk:["Coloquei mais chuva no Sul e menos no Nordeste?","Coloquei mais calor no inverno do Sudeste?"]},
+   {tag:"apl",q:"Corrija a frase: “O aquecimento global aumenta as chuvas nas áreas secas, o que é uma vantagem para a agricultura.”",modelo:"Está errada. O aquecimento global pode diminuir ainda mais as chuvas em lugares que já são pouco úmidos, causando secas e até desertificação — o que prejudica a agricultura.",chk:["Disse que a frase está errada?","Expliquei que diminui a chuva em áreas secas (seca/desertificação)?"]}
+  ]
+ },
+ {
+  porto:"Parada 9 · Capítulo 15 · pp. 40–50", emoji:"🏭", u:"c15", foco:true,
+  titulo:"Tampa sobre a Cidade: enchentes, chuva ácida e inversão térmica",
+  texto:[
+   "Prever o tempo ajuda a sociedade: alerta de tempestade, abrigo contra furacão, evacuação de áreas de risco. As <span class='destaque'>enchentes</span> são <b>fenômenos sociais</b>: juntam as <b>cheias</b> dos rios (fenômeno natural) com a <b>ocupação sem planejamento</b>. Nas cidades, o <b>asfalto impermeabiliza o solo</b> e a água não infiltra, saturando rios, córregos e galerias. A Meteorologia ajuda a <b>avisar</b>, mas <b>não acaba</b> com as enchentes: só o <b>planejamento urbano</b> e uma <b>cidade limpa</b> combatem o problema.",
+   "A <span class='destaque'>chuva ácida</span> vem da <b>queima de combustíveis fósseis</b> (petróleo, carvão): os elementos lançados no ar formam substâncias como o ácido sulfúrico, que se mistura à água da chuva e a deixa <b>corrosiva</b>. Ela <b>corrói monumentos</b> e altera matas e lagos. Pode cair na cidade e no campo, porque as massas de ar levam a poluição.",
+   "A <span class='destaque'>inversão térmica</span> é um fenômeno natural, mais comum no <b>inverno</b>. Normalmente, o ar perto do chão é aquecido pelo Sol e <b>sobe</b>, e o ar frio de cima desce, fazendo o ar circular. À noite, e mais ainda no inverno, esse ciclo para: o <b>ar frio fica embaixo</b> e uma camada de <b>ar quente fica por cima, como uma tampa</b>. Se há poluição, ela fica <b>presa perto do chão</b>, sem se dispersar: aparecem <b>doenças respiratórias, irritação nos olhos</b> e a visão da cidade fica limitada. Para diminuir o problema: <b>biocombustíveis</b> e fontes alternativas, <b>fiscalização das indústrias</b> e <b>transporte público</b>.",
+   "No campo, a <b>Climatologia</b> ajuda a escolher o que plantar e a <b>Meteorologia</b> ajuda a evitar perdas. A <span class='destaque'>geada</span> é o gelo que se forma sobre as plantas quando o <b>orvalho congela</b>, em noites com <b>poucas nuvens</b> e frio. A <span class='destaque'>estiagem</span> (semanas sem chuva) é difícil de prever; no clima tropical de boa parte do Brasil ela acontece no <b>inverno</b> e baixa o nível dos rios.",
+   "<div class='olhar'><b>Revisão — inversão térmica:</b> AR QUENTE = “TAMPA”. Sem circulação vertical, os poluentes ficam concentrados sobre a cidade.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Explique com as suas palavras o que é a inversão térmica e qual é a relação dela com a poluição.",modelo:"É quando o ar frio fica preso perto do chão e uma camada de ar quente fica por cima, como uma tampa, e o ar para de circular (mais comum no inverno). Se a cidade está poluída, a poluição fica presa perto do chão e não se espalha, causando problemas respiratórios e irritação nos olhos.",chk:["Disse que o ar frio fica embaixo e o quente fica por cima (tampa)?","Liguei isso à poluição presa perto do chão?"]},
+   {tag:"apl",q:"Uma estátua antiga de uma praça está com o rosto “derretido” e manchado. Qual fenômeno provavelmente causou isso? Explique como ele se forma.",modelo:"A chuva ácida. A queima de combustíveis fósseis lança no ar substâncias que formam ácidos (como o ácido sulfúrico); eles se misturam à água da chuva, que fica corrosiva e desgasta os monumentos.",chk:["Respondi chuva ácida?","Expliquei a formação (queima de combustíveis → ácido na água da chuva)?"]},
+   {tag:"apl",q:"Um colega disse: “a Meteorologia vai acabar com as enchentes da nossa cidade”. Ele está certo? O que realmente ajuda?",modelo:"Não. A Meteorologia só ajuda a prever e avisar, para as pessoas saírem das áreas de risco. O que combate as enchentes é o planejamento urbano e uma cidade limpa, já que o asfalto (impermeabilização) e o lixo pioram o problema.",chk:["Disse que a Meteorologia só prevê/avisa, não acaba com enchentes?","Citei planejamento urbano / cidade limpa / impermeabilização?"]}
+  ]
+ },
+ {
+  porto:"Parada 10 · Capítulo 19 · pp. 96–99 e 112", emoji:"🐋", u:"c19", foco:true,
+  titulo:"Planeta Água: oceanos, mares e seus movimentos",
+  texto:[
+   "Cerca de <b>70% da superfície</b> da Terra é coberta por água: é a <span class='destaque'>hidrosfera</span> (oceanos, mares e águas continentais). Os <b>oceanos</b> são grandes massas de água salgada: <b>Pacífico</b> (o maior e o mais profundo), <b>Atlântico</b> (o melhor para a navegação e o mais importante para a economia), <b>Índico</b>, <b>Glacial Antártico</b> e <b>Glacial Ártico</b> (o derretimento das calotas dele está ligado às mudanças climáticas).",
+   "Os <span class='destaque'>mares</span> são <b>menores, menos profundos</b> e recebem mais influência dos continentes. Tipos: <b>fechado</b> (sem ligação com o oceano, como o Mar Morto e o Cáspio), <b>interior ou continental</b> (ligado ao oceano só por um <b>estreito ou canal</b>, como o Mediterrâneo) e <b>aberto</b> (com grande abertura para o oceano, como o Mar do Caribe).",
+   "A água do mar está sempre em movimento: as <b>ondas</b> (causadas pelo <b>vento</b>), as <b>marés</b> (subida e descida do nível do mar causadas pela <b>atração do Sol e da Lua</b> — maré alta e maré baixa) e as <b>correntes marítimas</b> (causadas pelas diferenças de temperatura e pela rotação da Terra). O mar é salgado porque os rios levam partículas que formam o <b>sal</b>; a água evapora, mas o sal fica.",
+   "<div class='olhar'><b>Oceanos sob pressão (revisão + livro p. 112):</b> <b>plástico</b>, <b>pesca industrial</b> e <b>petróleo</b>. A <b>pesca predatória</b> em escala industrial tira toneladas de peixes sem respeitar as espécies nem a época de reprodução, e pode fazer cardumes inteiros desaparecerem. Ser enorme não deixa o oceano imune à poluição.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Qual é a principal diferença entre um oceano e um mar?",modelo:"O oceano é uma massa de água salgada enorme e profunda. O mar é menor, menos profundo e fica mais perto da costa, recebendo mais influência dos continentes.",chk:["Disse que o mar é menor/menos profundo?","Citei a maior influência dos continentes sobre o mar?"]},
+   {tag:"apl",q:"Classifique estes mares imaginários e justifique: (A) Mar Verde, sem nenhuma ligação com o oceano; (B) Mar Dourado, que se liga ao oceano só por um canal estreito.",modelo:"(A) Mar fechado, porque não tem comunicação com o oceano. (B) Mar interior (ou continental), porque se comunica com o oceano por um estreito/canal.",chk:["Classifiquei A como fechado?","Classifiquei B como interior/continental?"]},
+   {tag:"apl",q:"Alguém disse: “o oceano é tão grande que a poluição e a pesca não fazem diferença”. Responda com dois argumentos.",modelo:"Não é verdade. A pesca predatória industrial tira peixes sem respeitar a época de reprodução e pode acabar com cardumes inteiros. E o plástico e o petróleo poluem a água e prejudicam a vida marinha, mesmo num oceano enorme.",chk:["Usei a pesca predatória como argumento?","Usei plástico e/ou petróleo como argumento?"]}
+  ]
+ },
+ {
+  porto:"Parada 11 · Capítulos 19 e 20 · pp. 99–101 e 123", emoji:"🏞️", u:"c19", foco:true,
+  titulo:"Seguindo o Rio: partes, regimes e relevo",
+  texto:[
+   "Só cerca de <b>2,5%</b> da água do planeta está nos continentes, e a maior parte da água doce está presa em <b>geleiras e neves eternas</b>. Um <span class='destaque'>rio</span> é um curso de água que surge de uma <b>nascente</b> e segue pelo relevo até outro rio, um lago ou o oceano. Conforme a principal fonte de água, o <b>regime</b> do rio é: <b>pluvial</b> (chuva), <b>nival</b> (derretimento de neve ou geleiras) ou <b>misto</b> (os dois).",
+   "Partes do rio: <b>nascente ou cabeceira</b> (onde nasce, no ponto mais alto); <b>leito</b> (onde a água corre); <b>foz ou embocadura</b> (onde deságua); <b>margens</b> — olhando o rio no sentido da foz, a da direita é a <b>margem direita</b>; <b>curso superior</b> (perto da nascente), <b>médio</b> e <b>inferior</b> (perto da foz); <b>meandros</b> (as curvas). Um ponto mais perto da nascente fica a <span class='destaque'>montante</span>; mais perto da foz, a <span class='destaque'>jusante</span>.",
+   "A foz pode ser em <b>estuário</b> (um único canal — o tipo mais comum no Brasil) ou em <b>delta</b> (vários canais separados por ilhas). Há ainda rios <b>perenes</b> (permanentes) e <b>intermitentes</b> ou temporários, que aparecem e somem com a chuva e a estiagem, como os do Sertão nordestino.",
+   "<b>O relevo muda o rio:</b> rios de <span class='destaque'>planalto</span> têm declives e quedas (cachoeiras), águas <b>velozes</b> e são bons para <b>gerar energia</b>. Rios de <span class='destaque'>planície</span> correm num terreno mais plano, com águas <b>calmas</b>, e são bons para a <b>navegação</b>.",
+   "<div class='olhar'><b>Revisão — planalto × planície:</b> PLANALTO = maior declive, corredeiras, energia. PLANÍCIE = baixo declive, meandros, navegação.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Qual é a diferença entre um rio de planalto e um rio de planície? Para que serve melhor cada um?",modelo:"O rio de planalto tem declives e quedas, águas rápidas, e serve melhor para gerar energia elétrica. O rio de planície corre em terreno plano, com águas calmas, e serve melhor para a navegação.",chk:["Liguei planalto a águas rápidas e energia?","Liguei planície a águas calmas e navegação?"]},
+   {tag:"apl",q:"Você está num barco descendo um rio em direção à foz. A cidade que ficou para trás (mais perto da nascente) está a montante ou a jusante? E qual margem está do seu lado direito?",modelo:"A cidade que ficou para trás, mais perto da nascente, está a montante. Como estou olhando no sentido da foz, a margem do meu lado direito é a margem direita.",chk:["Respondi montante para o ponto mais perto da nascente?","Usei a regra de olhar para a foz para definir a margem direita?"]},
+   {tag:"apl",q:"Dê o regime de cada rio imaginário: (A) nasce do derretimento de uma geleira nas montanhas; (B) depende só das chuvas; (C) recebe água da chuva e do degelo.",modelo:"(A) Regime nival. (B) Regime pluvial. (C) Regime misto.",chk:["Acertei nival (A) e pluvial (B)?","Acertei misto (C)?"]}
+  ]
+ },
+ {
+  porto:"Parada 12 · Capítulo 19 · pp. 101–110", emoji:"💧", u:"c19",
+  titulo:"Água Escondida: aquíferos, ciclo e distribuição da água",
+  texto:[
+   "Parte da água da chuva se infiltra no solo e fica guardada em rochas <b>porosas e permeáveis</b>: são os <span class='destaque'>aquíferos</span>. O <b>Aquífero Guarani</b> (1,2 milhão de km²) fica no Brasil, Uruguai, Argentina e Paraguai — 66% dele em oito estados brasileiros; seu nome homenageia os povos indígenas da região. O <b>Aquífero Alter do Chão</b> (Pará, Amazonas e Amapá) é a <b>maior reserva subterrânea de água doce do mundo</b>, está <b>todo em território nacional</b>, mas é <b>subaproveitado</b>, porque fica numa região com menos de 10% da população.",
+   "O <span class='destaque'>ciclo hidrológico</span> (ciclo da água): o calor do Sol faz a água de rios, lagos e oceanos <b>evaporar</b>; o vapor forma <b>nuvens</b>; quando elas ficam carregadas (<b>saturação</b>), a água volta à superfície como <b>precipitação</b> — líquida (chuva) ou sólida (granizo e neve). A <b>transpiração</b> de plantas e animais também participa: somada à evaporação, forma a <b>evapotranspiração</b>.",
+   "A Terra é o “planeta azul”, mas cerca de <b>97,5% da água é salgada</b> e só cerca de <b>2,5% é doce</b> — e boa parte dela está em geleiras e no subsolo. Além disso, a água é <b>mal distribuída</b>: a Ásia tem cerca de 31,8% dos recursos hídricos e mais de 60% da população; a América do Sul tem mais de 24% da água doce superficial, mas parte do povo sofre com a falta dela. Quando a <b>demanda</b> de água é maior do que a natureza consegue repor, acontece o <span class='destaque'>estresse hídrico</span>.",
+   "<div class='olhar'><b>Usos da água:</b> cerca de <b>70%</b> da água doce do mundo vai para a <b>agricultura</b> (irrigação, muitas vezes com desperdício); depois vêm a indústria e o uso doméstico. Uso sustentável = menos desperdício, menos poluição e políticas públicas.</div>"
+  ],
+  perguntas:[
+   {tag:"conc",q:"Descreva o ciclo da água em poucos passos, do Sol até a chuva.",modelo:"O Sol aquece a água de rios, lagos e oceanos, que evapora. O vapor sobe e forma nuvens. Quando as nuvens ficam carregadas (saturadas), a água cai como precipitação (chuva, granizo ou neve) e o ciclo recomeça. A transpiração das plantas e dos animais também manda vapor para o ar.",chk:["Coloquei evaporação → nuvens → precipitação, nessa ordem?","Citei o Sol como motor do ciclo (ou a transpiração)?"]},
+   {tag:"apl",q:"Responda a esta frase: “Se 70% do planeta é coberto de água, ninguém deveria ter falta de água”.",modelo:"Não é bem assim: cerca de 97,5% da água é salgada e só cerca de 2,5% é doce, e muito dessa água doce está em geleiras e no subsolo. Além disso, ela é mal distribuída e depende das condições econômicas dos países, então muita gente tem falta de água.",chk:["Usei a ideia de que quase toda a água é salgada (só 2,5% doce)?","Citei a má distribuição / condições socioeconômicas?"]},
+   {tag:"apl",q:"Por que o Aquífero Alter do Chão é considerado “subaproveitado”? E qual é a vantagem de ele estar todo no Brasil?",modelo:"Porque fica numa região com pouca gente (menos de 10% da população brasileira), então é pouco usado. A vantagem de estar todo em território nacional é que fica mais fácil o Brasil fazer a gestão e o uso dessa água.",chk:["Expliquei o subaproveitamento pela pouca população na região?","Citei a facilidade de gestão por estar todo no Brasil?"]}
+  ]
+ },
+ {
+  porto:"Parada 13 · Capítulo 20 · pp. 114–123", emoji:"⚡", u:"c20", foco:true,
+  titulo:"Usina e Hidrovia: as funções dos rios",
+  texto:[
+   "Os rios têm valor histórico, cultural, social e econômico — e servem até de <b>fronteira</b> (os rios Paraná e Iguaçu separam Brasil, Argentina e Paraguai). O Brasil tem uma rede de rios enorme, com poucos lagos, rios <b>perenes</b> e volumosos — exceto no Sertão nordestino, onde o clima <b>semiárido</b> favorece rios temporários. Três usos estudados: <b>energia, transporte e irrigação</b>.",
+   "<span class='destaque'>Hidrelétricas:</span> aproveitam os rios de <b>planalto</b>. Em 2022, geraram cerca de <b>62% da energia elétrica</b> do Brasil. Como funciona: constrói-se uma <b>barragem</b>, que forma um grande lago artificial; a água <b>represada</b> tem a força direcionada para <b>girar as turbinas</b>. Na revisão: <b>1)</b> água armazenada → <b>2)</b> turbina gira → <b>3)</b> gerador produz → <b>4)</b> energia é transmitida. É uma fonte <b>renovável</b> e diminui o uso de petróleo, carvão e gás. <b>Mas</b> tem impactos: retirada da vegetação, desaparecimento de espécies, <b>deslocamento forçado</b> de indígenas, ribeirinhos e comunidades tradicionais, e liberação de <b>gás metano</b> pela vegetação que fica alagada (o metano capta cerca de 20 vezes mais radiação que o CO₂).",
+   "Sudeste e Sul produzem mais (rios Paraná e Tietê, perto dos consumidores). A <b>Amazônia</b> tem o <b>maior potencial</b>, com rios volumosos, mas fica longe dos grandes centros. Nos últimos anos foram feitas <b>Belo Monte</b> (rio Xingu) e <b>Jirau e Santo Antônio</b> (rio Madeira), com muita polêmica: degradação ambiental e prejuízo a indígenas e ribeirinhos. <i>Revisão:</i> benefício = grande geração de eletricidade; impactos = alagamentos, biodiversidade e modos de vida — a decisão precisa avaliar energia, território e pessoas.",
+   "<span class='destaque'>Transporte fluvial:</span> usa os rios de <b>planície</b>. É <b>mais econômico e menos poluente</b> que caminhão e trem, leva muita carga, mas é <b>mais lento</b>. Precisa de <b>eclusas</b> (que fazem o barco vencer desníveis, construídas em barragens) e portos: rios adaptados viram <b>hidrovias</b>. Principais: <b>Solimões-Amazonas</b> (a principal), <b>Madeira</b> (soja e milho), <b>Paraguai</b> (minérios) e <b>Tietê-Paraná</b>. A <b>Região Norte</b> é a que mais usa barcos: muitos rios de planície, poucas estradas e tradição cultural.",
+   "<span class='destaque'>Irrigação:</span> regar plantações de forma artificial onde a chuva não basta — muito usada no norte de Minas Gerais e no Sertão nordestino, com a água do <b>rio São Francisco</b>. Problemas: desperdício por vazamentos e contaminação da água por agrotóxicos e fertilizantes."
+  ],
+  perguntas:[
+   {tag:"conc",q:"Explique, em 4 passos, como uma usina hidrelétrica produz energia.",modelo:"1) A barragem represa a água e forma um lago (água armazenada). 2) A força da água faz a turbina girar. 3) O gerador produz a eletricidade. 4) A energia é transmitida até as cidades.",chk:["Comecei pela água represada/armazenada na barragem?","Coloquei turbina → gerador → transmissão, nessa ordem?"]},
+   {tag:"apl",q:"Você vai participar de um debate sobre uma nova hidrelétrica na Amazônia. Escreva duas vantagens e duas desvantagens.",modelo:"Vantagens: gera muita eletricidade com uma fonte renovável e diminui o uso de combustíveis fósseis. Desvantagens: alaga grandes áreas e destrói vegetação e espécies, obriga indígenas e ribeirinhos a sair de suas terras e a vegetação alagada libera metano.",chk:["Citei duas vantagens (energia renovável, muita geração, menos combustível fóssil)?","Citei duas desvantagens (alagamento, biodiversidade, deslocamento de povos, metano)?"]},
+   {tag:"apl",q:"Explique por que a Região Norte usa muito mais barcos para transportar pessoas e cargas do que a Região Sudeste.",modelo:"Porque o Norte tem muitos rios de planície, calmos e bons para navegar, poucas estradas e ferrovias e a tradição de usar barcos. O Sudeste tem mais rios de planalto, rápidos, que exigem obras caras (eclusas, portos) para virar hidrovia.",chk:["Citei os rios de planície e a falta de outros transportes no Norte?","Comparei com os rios de planalto do Sudeste?"]}
+  ]
+ }
+];
+
+/* ====== ESTADO E PERSISTÊNCIA ====== */
+var CHAVE=KIT+'_leitura_v1';
+var mem={};
+var estado=carregar();
+
+function carregar(){
+  try{ var s=localStorage.getItem(CHAVE); if(s) return JSON.parse(s); }catch(e){ if(mem[CHAVE]) return JSON.parse(mem[CHAVE]); }
+  return {blocos:{}};
+}
+function calcProgresso(){
+  var conf=0, chkPend=0;
+  BLOCOS.forEach(function(bloco,i){
+    var b=estado.blocos[i]; if(!b||!b.conferido) return; conf++;
+    bloco.perguntas.forEach(function(p,j){ var ep=(b.perguntas&&b.perguntas[j])||{chk:{}}; p.chk.forEach(function(pt,k){ if(!ep.chk||!ep.chk[k]) chkPend++; }); });
+  });
+  estado.progresso={conferidos:conf,total:BLOCOS.length,chkPendentes:chkPend};
+  if(conf===BLOCOS.length && chkPend===0){ if(!estado.concluido){ estado.concluido=true; estado.concluidoEm=new Date().toISOString(); } }
+  return estado.progresso;
+}
+function salvar(){
+  calcProgresso();
+  var s=JSON.stringify(estado);
+  try{ localStorage.setItem(CHAVE,s); }catch(e){ mem[CHAVE]=s; }
+  var d=new Date();
+  document.getElementById('salvo').textContent='💾 Salvo às '+d.toLocaleTimeString('pt-BR')+' de '+d.toLocaleDateString('pt-BR');
+  atualizarTrilhaFim();
+}
+function atualizarTrilhaFim(){
+  var p=estado.progresso||calcProgresso();
+  var box=document.getElementById('trilha-fim'), txt=document.getElementById('trilha-fim-txt'), btn=document.getElementById('btn-prox');
+  var h3=box.querySelector('h3');
+  if(estado.concluido||trilhaLiberada()){
+    h3.textContent='✅ Leitura concluída — Quiz destravado!';
+    txt.textContent=estado.concluido?'Você conferiu as 13 paradas e respondeu a autoavaliação. Agora teste o que aprendeu.':'Trilha liberada pelos pais.';
+    btn.classList.remove('off');
+  } else {
+    h3.textContent='🔒 Próxima etapa: Quiz';
+    var faltam=p.total-p.conferidos;
+    txt.textContent=faltam>0 ? 'Destrava quando você conferir as '+p.total+' paradas (faltam '+faltam+').' : 'Falta responder a autoavaliação Sim/Não de '+p.chkPendentes+' ponto(s) para destravar.';
+    btn.classList.add('off');
+  }
+  marcarNav();
+}
+function estBloco(i){ if(!estado.blocos[i]) estado.blocos[i]={aberto:i===0,conferido:false,perguntas:{}}; return estado.blocos[i]; }
+function estPerg(i,j){ var b=estBloco(i); if(!b.perguntas[j]) b.perguntas[j]={resp:'',warned:false,red:false,tentou:'',chk:{}}; return b.perguntas[j]; }
+
+/* ====== ANTICÓPIA (motor validado — Português 7º, 08/10/2026) ====== */
+function normPal(s){
+  return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/<[^>]*>/g,' ').replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim().split(' ').filter(Boolean);
+}
+function maiorRun(aw,bw){
+  var bStr=' '+bw.join(' ')+' ', best=0;
+  for(var i=0;i<aw.length;i++){
+    for(var len=aw.length-i; len>0; len--){
+      var sub=aw.slice(i,i+len).join(' ');
+      if(bStr.indexOf(' '+sub+' ')>=0){ if(len>best)best=len; break; }
+    }
+  }
+  return best;
+}
+function cobertoPorRuns(aw,bw,minRun){
+  var bStr=' '+bw.join(' ')+' ', cov=new Array(aw.length).fill(false);
+  for(var i=0;i<aw.length;i++){
+    for(var len=aw.length-i; len>=minRun; len--){
+      var sub=aw.slice(i,i+len).join(' ');
+      if(bStr.indexOf(' '+sub+' ')>=0){ for(var k=i;k<i+len;k++)cov[k]=true; break; }
+    }
+  }
+  return cov.filter(Boolean).length;
+}
+function ehCopia(resp, textoBloco, pergunta){
+  var a=normPal(resp), src=normPal(textoBloco), q=normPal(pergunta);
+  if(a.length<5) return false;
+  var qStr=' '+q.join(' ')+' ', keep=new Array(a.length).fill(true);
+  for(var i=0;i<a.length;i++){
+    for(var len=a.length-i; len>=4; len--){
+      var sub=a.slice(i,i+len).join(' ');
+      if(qStr.indexOf(' '+sub+' ')>=0){ for(var k=i;k<i+len;k++)keep[k]=false; break; }
+    }
+  }
+  var af=a.filter(function(w,idx){return keep[idx];});
+  if(af.length<5) return false;
+  var run=maiorRun(af,src);
+  var cov=cobertoPorRuns(af,src,5);
+  var ratio=cov/af.length;
+  return run>=8 || ratio>0.6;
+}
+
+/* ====== RENDER ====== */
+function textoPlano(bloco){ return bloco.texto.join(' '); }
+function irBloco(i){ var el=document.getElementById('bloco'+i); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }
+
+function render(){
+  var cont=document.getElementById('blocos'); cont.innerHTML='';
+  BLOCOS.forEach(function(bloco,i){
+    var b=estBloco(i);
+    var div=document.createElement('div'); div.className='bloco '+bloco.u+(b.aberto?'':' travado'); div.id='bloco'+i;
+    var html='<div class="bloco-cab"><div class="num">'+(i+1)+'</div><div><div class="porto">'+bloco.porto+(bloco.foco?' <span class="selo-foco">⭐ foco da revisão</span>':'')+'</div><h3>'+bloco.emoji+' '+bloco.titulo+'</h3></div></div>';
+    if(!b.aberto){
+      html+='<div class="cadeado">🔒 Esta parada abre quando você conferir a parada anterior.</div>';
+      div.innerHTML=html; cont.appendChild(div); return;
+    }
+    html+='<div class="bloco-corpo"><div class="texto">';
+    bloco.texto.forEach(function(p){ html+= (p.indexOf('<div')===0 || p.indexOf('<ul')===0 ? p : '<p>'+p+'</p>'); });
+    html+='</div>';
+    bloco.perguntas.forEach(function(p,j){
+      var ep=estPerg(i,j);
+      var tagTxt=p.tag==='conc'?'Conceito':'Aplicação';
+      html+='<div class="perg'+(ep.red?' red':'')+'" id="perg'+i+'_'+j+'">';
+      html+='<span class="tag '+p.tag+'">'+tagTxt+'</span>';
+      html+='<label>'+(j+1)+'. '+p.q+'</label>';
+      html+='<textarea id="ta'+i+'_'+j+'" oninput="digitou('+i+','+j+')">'+(ep.resp||'')+'</textarea>';
+      html+='<div class="aviso" id="av'+i+'_'+j+'"></div>';
+      html+='<div class="modelo" id="mod'+i+'_'+j+'"><span class="lab">Resposta-modelo</span><p>'+p.modelo+'</p>';
+      html+='<div class="chk" id="chk'+i+'_'+j+'"></div></div>';
+      html+='</div>';
+    });
+    html+='<button class="conferir" id="conf'+i+'" onclick="conferir('+i+')">✔️ Conferir esta parada</button>';
+    html+='<div class="status-bloco" id="st'+i+'"></div>';
+    if(i<BLOCOS.length-1){ html+='<div class="prox" id="px'+i+'"></div>'; }
+    html+='</div>';
+    div.innerHTML=html;
+    cont.appendChild(div);
+  });
+  BLOCOS.forEach(function(bloco,i){
+    var b=estBloco(i);
+    if(b.aberto && b.conferido){ mostrarConferido(i); }
+    atualizarBotao(i);
+  });
+  atualizarRelatorio();
+  atualizarTrilhaFim();
+}
+
+function digitou(i,j){
+  var ep=estPerg(i,j);
+  ep.resp=document.getElementById('ta'+i+'_'+j).value;
+  if(ep.red){
+    var bloco=BLOCOS[i];
+    if(!ehCopia(ep.resp, textoPlano(bloco), bloco.perguntas[j].q)){
+      ep.red=false;
+      var pd=document.getElementById('perg'+i+'_'+j); if(pd) pd.classList.remove('red');
+      var av=document.getElementById('av'+i+'_'+j); if(av){av.className='aviso'; av.textContent='';}
+    }
+  }
+  atualizarBotao(i);
+  salvar();
+  atualizarRelatorio();
+}
+
+function atualizarBotao(i){
+  var b=estBloco(i); if(!b.aberto) return;
+  var btn=document.getElementById('conf'+i); if(!btn) return;
+  var todas=true;
+  BLOCOS[i].perguntas.forEach(function(p,j){
+    var v=(document.getElementById('ta'+i+'_'+j)||{}).value||estPerg(i,j).resp||'';
+    if(v.trim().length<3) todas=false;
+  });
+  btn.disabled=!todas;
+}
+
+function conferir(i){
+  var bloco=BLOCOS[i], b=estBloco(i);
+  var algumBloqueado=false;
+  bloco.perguntas.forEach(function(p,j){
+    var ep=estPerg(i,j);
+    ep.resp=document.getElementById('ta'+i+'_'+j).value;
+    var av=document.getElementById('av'+i+'_'+j);
+    var copia=ehCopia(ep.resp, textoPlano(bloco), p.q);
+    if(copia){
+      if(!ep.warned){
+        ep.warned=true; ep.tentou=ep.resp;
+        av.className='aviso amarelo';
+        av.innerHTML='✋ Boa parte da sua resposta está igual ao texto. Tente <b>reescrever com as suas palavras</b> — explique como se fosse para um amigo, sem olhar o texto. Pode ficar mais curto e simples: o que vale é ser <b>SEU</b>.';
+        algumBloqueado=true;
+      } else {
+        ep.red=true;
+        av.className='aviso vermelho';
+        av.innerHTML='🔴 Esta resposta continua muito parecida com o texto. Ela foi aceita, mas ficou marcada para revisar. Se reescrever com as suas palavras, a marca some.';
+        document.getElementById('perg'+i+'_'+j).classList.add('red');
+      }
+    } else {
+      ep.red=false;
+      if(av){ av.className='aviso'; av.textContent=''; }
+      var pd=document.getElementById('perg'+i+'_'+j); if(pd) pd.classList.remove('red');
+    }
+  });
+  salvar();
+  if(algumBloqueado){
+    document.getElementById('st'+i).innerHTML='<span style="color:var(--ambar)">✍️ Reescreva as respostas marcadas em amarelo e clique em Conferir de novo.</span>';
+    return;
+  }
+  b.conferido=true;
+  if(i<BLOCOS.length-1){ estBloco(i+1).aberto=true; }
+  salvar();
+  render();
+  var alvo=document.getElementById('bloco'+i);
+  if(alvo) alvo.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function mostrarConferido(i){
+  var bloco=BLOCOS[i];
+  bloco.perguntas.forEach(function(p,j){
+    var ep=estPerg(i,j);
+    var mod=document.getElementById('mod'+i+'_'+j); if(mod) mod.classList.add('show');
+    if(ep.red){ var pd=document.getElementById('perg'+i+'_'+j); if(pd) pd.classList.add('red');
+      var av=document.getElementById('av'+i+'_'+j); if(av){av.className='aviso vermelho'; av.innerHTML='🔴 Resposta marcada para revisar (muito parecida com o texto). Reescreva com as suas palavras para tirar a marca.';}
+    }
+    var chk=document.getElementById('chk'+i+'_'+j); if(chk){
+      var h='<b style="font-size:.8rem;color:#8fe0b4">Confira você: a sua resposta…</b>';
+      p.chk.forEach(function(pt,k){
+        var val=ep.chk[k]||'';
+        h+='<div class="item"><span>'+pt+'</span><span class="simnao">'
+         +'<button class="sim'+(val==='sim'?' ativo':'')+'" onclick="marcarChk('+i+','+j+','+k+',\'sim\')">Sim</button>'
+         +'<button class="nao'+(val==='nao'?' ativo':'')+'" onclick="marcarChk('+i+','+j+','+k+',\'nao\')">Não</button>'
+         +'</span></div>';
+      });
+      chk.innerHTML=h;
+    }
+  });
+  atualizarStatusBloco(i);
+  var btn=document.getElementById('conf'+i); if(btn){ btn.textContent='✔️ Parada conferida'; btn.disabled=true; }
+  if(i<BLOCOS.length-1){
+    var px=document.getElementById('px'+i);
+    if(px) px.innerHTML='<a href="#bloco'+(i+1)+'" onclick="irBloco('+(i+1)+');return false;">➡️ Ir para a próxima parada</a>';
+  }
+}
+
+function marcarChk(i,j,k,val){
+  var ep=estPerg(i,j); ep.chk[k]=val;
+  salvar(); mostrarConferido(i); atualizarStatusBloco(i); atualizarRelatorio();
+}
+
+function statusPergunta(i,j){
+  var ep=estPerg(i,j), p=BLOCOS[i].perguntas[j];
+  if(ep.red) return 'revisar';
+  var temNao=false, todasResp=true;
+  p.chk.forEach(function(pt,k){ if(ep.chk[k]==='nao') temNao=true; if(!ep.chk[k]) todasResp=false; });
+  if(temNao) return 'revisar';
+  if(!todasResp) return 'pendente';
+  return 'ok';
+}
+function atualizarStatusBloco(i){
+  var st=document.getElementById('st'+i); if(!st) return;
+  var revisar=false, pendente=false;
+  BLOCOS[i].perguntas.forEach(function(p,j){ var s=statusPergunta(i,j); if(s==='revisar')revisar=true; if(s==='pendente')pendente=true; });
+  if(revisar) st.innerHTML='<span style="color:#ffb3b3">🔁 Esta parada tem pontos para revisar.</span>';
+  else if(pendente) st.innerHTML='<span style="color:var(--ambar)">📝 Responda a autoavaliação (Sim/Não) de cada pergunta.</span>';
+  else st.innerHTML='<span style="color:#8fe0b4">✅ Parada concluída com sucesso!</span>';
+  atualizarRelatorio();
+}
+
+function atualizarRelatorio(){
+  var lista=[], totalConf=0, totalRed=0, totalNao=0;
+  BLOCOS.forEach(function(bloco,i){
+    var b=estBloco(i); if(!b.conferido) return; totalConf++;
+    bloco.perguntas.forEach(function(p,j){
+      var ep=estPerg(i,j);
+      if(ep.red){ totalRed++; lista.push('Parada '+(i+1)+' ('+bloco.titulo+'): pergunta '+(j+1)+' — resposta muito parecida com o texto.'); }
+      p.chk.forEach(function(pt,k){ if(ep.chk[k]==='nao'){ totalNao++; lista.push('Parada '+(i+1)+' ('+bloco.titulo+'): revisar — "'+pt+'"'); } });
+    });
+  });
+  var rev=document.getElementById('revisar'), rl=document.getElementById('revisar-lista');
+  if(lista.length){ rev.style.display='block'; rl.innerHTML=lista.map(function(x){return '<li>'+x+'</li>';}).join(''); }
+  else { rev.style.display='none'; rl.innerHTML=''; }
+  var rc=document.getElementById('rel-conteudo');
+  rc.innerHTML='<b>Paradas conferidas:</b> '+totalConf+' de '+BLOCOS.length+'.<br>'
+    +'<b>Respostas marcadas (muito parecidas com o texto):</b> '+totalRed+'.<br>'
+    +'<b>Pontos marcados como "Não" na autoavaliação:</b> '+totalNao+'.<br>'
+    +(lista.length? '<span style="color:#ffb3b3">Há '+lista.length+' ponto(s) para revisar (lista acima).</span>' : '<span style="color:#8fe0b4">Sem pontos pendentes para revisar. 👏</span>');
+}
+
+/* ====== EXPORTAR / IMPORTAR / ZERAR ====== */
+function exportar(){
+  var dados=JSON.stringify(estado,null,2);
+  var blob=new Blob([dados],{type:'application/json'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='leitura-guiada_balao-sonda.json'; a.click();
+}
+function importar(ev){
+  var f=ev.target.files[0]; if(!f) return;
+  var r=new FileReader();
+  r.onload=function(){ try{ estado=JSON.parse(r.result); salvar(); render(); mostrarModal('✅ Progresso importado!',false); }catch(e){ mostrarModal('❌ Arquivo inválido.',false); } };
+  r.readAsText(f);
+}
+var acaoZerar=null;
+function pedirZerar(){ acaoZerar=true; mostrarModal('Tem certeza que quer apagar TODO o progresso desta leitura? (O Quiz continua destravado se já tiver sido destravado.)',true); }
+function mostrarModal(txt,confirmar){
+  document.getElementById('modal-txt').innerHTML=txt;
+  document.getElementById('modal').classList.add('show');
+  document.getElementById('modal-cancel').style.display=confirmar?'inline-block':'none';
+  document.getElementById('modal-ok').textContent=confirmar?'Sim, apagar':'Ok';
+  document.getElementById('modal-ok').onclick=function(){ if(confirmar && acaoZerar){ var c=estado.concluido, ce=estado.concluidoEm; estado={blocos:{}}; if(c){estado.concluido=true; estado.concluidoEm=ce;} salvar(); render(); } acaoZerar=null; fecharModal(); };
+}
+function fecharModal(){ document.getElementById('modal').classList.remove('show'); }
+
+render();
+</script>
+</body>
+</html>

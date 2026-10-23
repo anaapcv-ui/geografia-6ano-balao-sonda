@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulado · Balão-Sonda · Geografia 6º</title>
+<style>
+  :root{--palco:#0b1426;--palco2:#12203a;--aco:#22324f;--aco2:#33496e;--ambar:#ffcf33;--magenta:#ff8a3d;--ciano:#3fd0e8;--verde:#4ade80;--vermelho:#e0403f;--texto:#eaf0f8;--cinza:#8f98b2}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:radial-gradient(1100px 480px at 50% -10%,#11193a,#0b1426 60%),var(--palco);color:var(--texto);line-height:1.6;padding-bottom:60px}
+  header{background:linear-gradient(120deg,#0b1430,#122052);padding:26px 18px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.5);border-bottom:6px solid var(--vermelho)}
+  header .selo{font-size:.78rem;letter-spacing:2px;color:#c9d6f5;text-transform:uppercase}
+  header h1{font-size:1.5rem;margin:6px 0 2px}
+  header p{color:#dbe4fa;font-size:.92rem}
+  .wrap{max-width:820px;margin:0 auto;padding:16px}
+  .barra-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
+  .barra-nav a{background:var(--palco2);color:var(--texto);text-decoration:none;padding:7px 12px;border-radius:20px;font-size:.85rem;border:1px solid var(--aco)}
+  .barra-nav a.on{background:var(--vermelho);color:#fff;font-weight:bold}
+  .intro{background:var(--palco2);border:1px solid var(--aco);border-radius:14px;padding:16px;margin-bottom:16px}
+  .intro h2{color:#ff8a89;font-size:1.1rem;margin-bottom:8px}
+  .painel{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;background:var(--palco2);border:1px solid var(--aco);border-radius:12px;padding:10px 14px;margin-bottom:16px;font-size:.85rem}
+  .painel .btns{display:flex;gap:6px;flex-wrap:wrap}
+  button{cursor:pointer;font-family:inherit}
+  .mini{background:var(--palco);color:var(--texto);border:1px solid var(--aco2);border-radius:8px;padding:6px 10px;font-size:.8rem}
+  .codigo{background:linear-gradient(120deg,#122a1f,#1b4d36);border:2px solid var(--verde);border-radius:14px;padding:16px;text-align:center;margin-bottom:16px;display:none}
+  .codigo.show{display:block}
+  .codigo .cod{font-size:1.8rem;font-weight:bold;letter-spacing:3px;color:#8fe0b4;margin:6px 0}
+  .progresso{height:10px;background:var(--aco);border-radius:6px;overflow:hidden;margin-bottom:16px}
+  .progresso div{height:100%;background:var(--vermelho);width:0;transition:width .3s}
+  .q{background:var(--palco2);border:1px solid var(--aco);border-radius:16px;padding:16px;margin-bottom:14px}
+  .q .num{color:#ff8a89;font-weight:bold;font-size:.8rem;letter-spacing:1px;text-transform:uppercase}
+  .q .tipo{float:right;font-size:.7rem;color:#fff;border-radius:10px;padding:2px 8px;background:#2a3a5a}
+  .q .tipo.rom{background:#1f5a4a}
+  .q h3{font-size:1rem;margin:6px 0 10px;font-weight:600}
+  .afirm{background:#12193a;border-left:3px solid var(--aco2);padding:8px 12px;margin:6px 0;border-radius:0 8px 8px 0;font-size:.93rem}
+  .afirm.ok{border-left-color:var(--verde)}.afirm.no{border-left-color:#777;color:#aaa}
+  .alt{display:block;background:#12193a;border:1px solid var(--aco2);border-radius:10px;padding:10px 12px;margin:6px 0;cursor:pointer}
+  .alt:hover{border-color:#ff8a89}
+  .alt input{margin-right:8px}
+  .alt.sel{border-color:#ff8a89;background:#2a1620}
+  .alt.certa{border-color:var(--verde);background:#0e2b1f}
+  .alt.errada{border-color:#555;background:#171a28;color:#aaa}
+  .alt.marcada-errada{border-color:var(--vermelho);background:#3a1414}
+  .exp{margin-top:8px;font-size:.88rem;padding:8px 10px;border-radius:8px;background:#12193a;border-left:3px solid var(--ambar);display:none}
+  .exp.show{display:block}
+  .enviar{width:100%;background:var(--vermelho);color:#fff;border:none;border-radius:12px;padding:14px;font-size:1.05rem;font-weight:bold;margin:10px 0}
+  .enviar:disabled{background:#1c2340;color:#6f7794;cursor:not-allowed}
+  .gab{background:var(--palco2);border:1px dashed var(--ciano);border-radius:14px;padding:16px;margin:16px 0;display:none}
+  .gab.show{display:block}
+  .gab input{padding:9px;border-radius:8px;border:1px solid var(--aco2);background:#0a0f20;color:var(--texto);font-size:1rem;width:180px;text-transform:uppercase}
+  .gab button{background:var(--ciano);color:#042030;border:none;border-radius:8px;padding:9px 14px;font-weight:bold;margin-left:6px}
+  .gab .msg{margin-top:8px;font-size:.9rem}
+  .fim{background:linear-gradient(120deg,#122a1f,#163a2a);border:2px solid var(--verde);border-radius:16px;padding:18px;margin-top:18px;text-align:center}
+  .fim h3{color:#8fe0b4;margin-bottom:8px}
+  .fim a{display:inline-block;margin-top:8px;background:var(--verde);color:#04231a;text-decoration:none;font-weight:bold;padding:11px 20px;border-radius:10px}
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(5,4,8,.96);z-index:50;align-items:center;justify-content:center;padding:16px}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--palco2);border:1px solid var(--ciano);border-radius:14px;padding:22px;max-width:440px;text-align:center}
+  .modal p{margin-bottom:14px}
+  .modal .big{font-size:2.2rem}
+  .modal a,.modal button{display:inline-block;background:var(--ciano);color:#042030;border:none;border-radius:8px;padding:10px 18px;font-weight:bold;text-decoration:none}
+  .rodape{text-align:center;color:var(--cinza);font-size:.8rem;margin-top:24px}
+  .clima{margin:10px 0;max-width:460px}.clima svg{width:100%;height:auto;display:block}
+</style>
+</head>
+<body>
+<header>
+  <div class="selo">Balão-Sonda · Geografia 6º ano · CCF</div>
+  <h1>📝 Simulado</h1>
+  <p>26 questões no estilo da prova · múltipla escolha e números romanos · Código SIM</p>
+</header>
+
+<div class="wrap">
+  <nav class="barra-nav" id="nav">
+    <a href="leitura-guiada.html">📖 Leitura Guiada</a>
+    <a href="quiz.html">🎯 Quiz</a>
+    <a href="resumo.html">🗺️ Resumo</a>
+    <a class="on" href="simulado.html">📝 Simulado</a>
+    <a href="index.html">🏠 Início</a>
+  </nav>
+
+  <div class="codigo" id="codigo"><div>Seu código de liberação</div><div class="cod" id="cod"></div><div id="codtxt"></div></div>
+
+  <div class="intro">
+    <h2>📝 Valendo!</h2>
+    <p>Faça como se fosse a prova: <b>26 questões</b>, todas obrigatórias. Há questões de <b>múltipla escolha</b> e <b>3 de números romanos</b> (leia as afirmativas I, II, III e IV e escolha a alternativa correta). Depois de enviar, as respostas travam e sai o código <b>SIM</b>.</p>
+  </div>
+
+  <div class="painel">
+    <span id="salvo">💾 Progresso salvo automaticamente.</span>
+    <div class="btns">
+      <button class="mini" onclick="exportar()">📥 Exportar</button>
+      <button class="mini" onclick="document.getElementById('imp').click()">📤 Importar</button>
+      <input type="file" id="imp" accept="application/json" style="display:none" onchange="importar(event)">
+      <button class="mini" onclick="pedirZerar()">🗑️ Zerar tudo</button>
+    </div>
+  </div>
+
+  <div class="progresso"><div id="barra"></div></div>
+  <div id="questoes"></div>
+  <button class="enviar" id="btn-enviar" onclick="enviar()" disabled>📨 Enviar simulado (responda todas)</button>
+
+  <div class="gab" id="gab">
+    <b>🔑 Gabarito comentado:</b> digite o código SIM que apareceu no topo.<br>
+    <input id="gab-in" placeholder="SIM-XX-YY"><button onclick="abrirGab()">Ver gabarito</button>
+    <div class="msg" id="gab-msg"></div>
+  </div>
+
+  <div class="fim" id="fim" style="display:none">
+    <h3>🏁 Trilha completa!</h3>
+    <p>Você percorreu os quatro materiais na ordem. Agora tudo fica aberto para revisar quantas vezes quiser até a prova.</p>
+    <a href="index.html">🏠 Voltar ao início</a>
+  </div>
+
+  <div class="rodape">Feito com carinho para o jovem aprendiz. 🎈 Boa prova!</div>
+</div>
+
+<div class="modal-bg" id="lock">
+  <div class="modal">
+    <div class="big">🔒</div>
+    <p><b>Esta etapa ainda está trancada.</b></p>
+    <p id="lock-txt">Para abrir o Simulado, leia o Resumo até o fim.</p>
+    <a href="index.html">Voltar ao início</a>
+  </div>
+</div>
+<div class="modal-bg" id="modal" style="background:rgba(0,0,0,.75)">
+  <div class="modal">
+    <p id="modal-txt"></p>
+    <button onclick="fecharModal()" id="modal-ok">Ok</button>
+    <button class="mini" onclick="fecharModal()" id="modal-cancel" style="display:none;margin-left:8px">Cancelar</button>
+  </div>
+</div>
+
+<script>
+/* ====== TRILHA COM CADEADOS (módulo comum do kit) ====== */
+var KIT='balao_sonda_geo6';
+var TRILHA=[
+ {id:'leitura', chave:KIT+'_leitura_v1', nome:'Leitura Guiada', arquivo:'leitura-guiada.html', emoji:'📖'},
+ {id:'quiz', chave:KIT+'_quiz_v1', nome:'Quiz', arquivo:'quiz.html', emoji:'🎯'},
+ {id:'resumo', chave:KIT+'_resumo_v1', nome:'Resumo', arquivo:'resumo.html', emoji:'🗺️'},
+ {id:'simulado', chave:KIT+'_simulado_v1', nome:'Simulado', arquivo:'simulado.html', emoji:'📝'}
+];
+function lerJSON(k){ try{ var s=localStorage.getItem(k); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function trilhaLiberada(){ var t=lerJSON(KIT+'_trilha_v1'); return !!(t&&t.liberadoPelosPais); }
+function etapaConcluida(id){ var e=TRILHA.filter(function(t){return t.id===id;})[0]; var d=lerJSON(e.chave); return !!(d&&d.concluido); }
+function podeAbrir(id){ var idx=TRILHA.map(function(t){return t.id;}).indexOf(id); if(idx<=0||trilhaLiberada()) return true; return etapaConcluida(TRILHA[idx-1].id); }
+function checarTrava(){
+  if(podeAbrir('simulado')) return true;
+  var txt='Para abrir o Simulado, leia o Resumo até o fim e clique em "Li o resumo até o fim".';
+  if(!etapaConcluida('quiz')) txt='Para abrir o Simulado, envie o Quiz e leia o Resumo até o fim.';
+  if(!etapaConcluida('leitura')) txt='Para abrir o Simulado, conclua a Leitura Guiada, envie o Quiz e leia o Resumo até o fim.';
+  document.getElementById('lock-txt').textContent=txt;
+  document.getElementById('lock').classList.add('show');
+  document.querySelector('.wrap').style.filter='blur(6px)';
+  return false;
+}
+
+/* ====== QUESTÕES (Callis Geografia 6 L2 — caps. 13, 14, 15, 19 e 20 + foco da revisão) — correta guardada pelo id ====== */
+var CLIMOGRAMA='<div class="clima"><svg viewBox="0 0 360 210" role="img" aria-label="Climograma de uma cidade imaginária"><rect x="0" y="0" width="360" height="210" fill="#0e1830" rx="8"/><text x="180" y="16" fill="#eaf0f8" font-size="11" text-anchor="middle">Climograma — Cidade Alfa (imaginária)</text>'
+ +(function(){ var ch=[290,340,360,310,240,140,90,70,90,120,150,220], tp=[27,27,27,27,26,26,26,27,27,28,28,27], s='', m='JFMAMJJASOND';
+   for(var i=0;i<12;i++){ var h=ch[i]/400*150; s+='<rect x="'+(38+i*26)+'" y="'+(180-h)+'" width="16" height="'+h+'" fill="#3fd0e8" opacity=".8"/><text x="'+(46+i*26)+'" y="194" fill="#c9d6f5" font-size="9" text-anchor="middle">'+m[i]+'</text>'; }
+   var pts=tp.map(function(t,i){ return (46+i*26)+','+(180-t/40*150); }).join(' ');
+   s+='<polyline points="'+pts+'" fill="none" stroke="#ff8a3d" stroke-width="2.5"/>';
+   s+='<text x="8" y="36" fill="#3fd0e8" font-size="9">chuva (mm)</text><text x="300" y="36" fill="#ff8a3d" font-size="9">temp. (°C)</text>';
+   s+='<text x="8" y="206" fill="#8f98b2" font-size="8">barras = chuva · linha = temperatura média</text>';
+   return s; })()
+ +'</svg></div>';
+var Q=[
+ {tipo:"mc",p:"A atmosfera é formada principalmente por dois gases. Quais são eles e em que proporção aproximada?",alts:[
+  {id:"a",t:"Nitrogênio (78%) e oxigênio (21%).",ok:true,e:"Juntos somam 99% da atmosfera; o 1% restante tem vapor de água, gás carbônico, argônio etc."},
+  {id:"b",t:"Oxigênio (78%) e nitrogênio (21%).",e:"Está invertido: o nitrogênio é o mais abundante."},
+  {id:"c",t:"Gás carbônico (78%) e oxigênio (21%).",e:"O gás carbônico existe em pequena quantidade."},
+  {id:"d",t:"Hélio (78%) e hidrogênio (21%).",e:"Hélio e hidrogênio formam a exosfera, não a maior parte da atmosfera."}]},
+ {tipo:"mc",p:"O efeito estufa natural é importante para a vida na Terra porque:",alts:[
+  {id:"a",t:"a atmosfera deixa a radiação do Sol entrar e segura parte do calor, mantendo o planeta aquecido.",ok:true,e:"Sem ele a Terra seria fria demais; o problema é quando ele é intensificado."},
+  {id:"b",t:"impede que qualquer raio de Sol chegue à superfície.",e:"A radiação solar entra; o que fica preso é parte do calor."},
+  {id:"c",t:"destrói a camada de ozônio.",e:"Quem destruiu o ozônio foram substâncias de sprays e geladeiras antigas."},
+  {id:"d",t:"faz a Terra perder todo o calor durante a noite.",e:"É o contrário: ele segura parte do calor."}]},
+ {tipo:"mc",p:"Em qual camada da atmosfera acontecem a chuva, a neve e os tornados?",alts:[
+  {id:"a",t:"Troposfera.",ok:true,e:"É a camada onde vivemos, a mais densa, com cerca de dois terços dos gases."},
+  {id:"b",t:"Estratosfera.",e:"Na estratosfera fica a camada de ozônio."},
+  {id:"c",t:"Termosfera.",e:"A termosfera fica entre 80 km e cerca de 700 km de altitude."},
+  {id:"d",t:"Exosfera.",e:"Na exosfera ficam muitos satélites artificiais."}]},
+ {tipo:"mc",p:"A camada de ozônio vem se recuperando lentamente porque:",alts:[
+  {id:"a",t:"desde o Protocolo de Montreal (1987), as substâncias que destruíam o ozônio vêm sendo substituídas.",ok:true,e:"Essas substâncias vinham de sprays de aerossol e antigos aparelhos de refrigeração."},
+  {id:"b",t:"o aquecimento global produz mais ozônio.",e:"O livro não diz isso; a recuperação vem da troca das substâncias."},
+  {id:"c",t:"os satélites da exosfera fecham o buraco.",e:"Satélites não fecham o buraco na camada de ozônio."},
+  {id:"d",t:"a troposfera passou a filtrar toda a radiação ultravioleta.",e:"Quem filtra a radiação ultravioleta é a camada de ozônio, na estratosfera."}]},
+ {tipo:"mc",p:"A ciência que estuda os fenômenos atmosféricos para PREVER as condições do tempo é a:",alts:[
+  {id:"a",t:"Meteorologia.",ok:true,e:"A Meteorologia faz a previsão do tempo; a Climatologia relaciona os fenômenos com o relevo, a vegetação, a ocupação do solo e a ação humana."},
+  {id:"b",t:"Climatologia.",e:"A Climatologia estuda o clima e suas relações, não a previsão do dia a dia."},
+  {id:"c",t:"Geologia.",e:"A Geologia estuda rochas e a formação da Terra."},
+  {id:"d",t:"Cartografia.",e:"A Cartografia estuda mapas."}]},
+ {tipo:"mc",p:"A diferença entre a temperatura máxima e a mínima registradas em um período chama-se:",alts:[
+  {id:"a",t:"amplitude térmica.",ok:true,e:"Exemplo: máxima 30 °C e mínima 20 °C → amplitude de 10 °C."},
+  {id:"b",t:"temperatura média.",e:"A média é calculada com várias medições do período."},
+  {id:"c",t:"pressão atmosférica.",e:"A pressão é o peso do ar sobre a superfície."},
+  {id:"d",t:"umidade do ar.",e:"Umidade é a quantidade de vapor de água no ar."}]},
+ {tipo:"mc",p:"O aparelho que mede a quantidade de chuva é o:",alts:[
+  {id:"a",t:"pluviômetro.",ok:true,e:"O livro até ensina a construir um com garrafa PET."},
+  {id:"b",t:"barômetro.",e:"O barômetro mede a pressão atmosférica."},
+  {id:"c",t:"higrômetro.",e:"O higrômetro mede a umidade do ar."},
+  {id:"d",t:"termômetro.",e:"O termômetro mede a temperatura."}]},
+ {tipo:"mc",p:"Observe o climograma da cidade imaginária.<br>"+CLIMOGRAMA+"O que se pode concluir sobre o clima dessa cidade?",alts:[
+  {id:"a",t:"Faz calor o ano todo, e as chuvas são maiores nos primeiros meses do ano.",ok:true,e:"A linha da temperatura fica perto de 26–28 °C em todos os meses, e as barras de chuva são mais altas de janeiro a maio."},
+  {id:"b",t:"Faz muito frio no meio do ano, com temperaturas abaixo de zero.",e:"A linha da temperatura quase não muda e fica sempre perto de 26–28 °C."},
+  {id:"c",t:"Chove mais em julho e agosto.",e:"Julho e agosto têm as barras de chuva mais baixas."},
+  {id:"d",t:"Não chove em nenhum mês do ano.",e:"Todas as barras mostram chuva."}]},
+ {tipo:"mc",p:"Por que, nos lugares de maior altitude, a temperatura costuma ser mais baixa?",alts:[
+  {id:"a",t:"Porque o ar é menos denso (tem menos gases) e segura menos o calor que vem da superfície.",ok:true,e:"Por isso há neve no topo do Chimborazo, mesmo perto da Linha do Equador."},
+  {id:"b",t:"Porque lá em cima o Sol não chega.",e:"O Sol chega; o problema é que o ar rarefeito retém menos calor."},
+  {id:"c",t:"Porque a pressão atmosférica é maior no alto.",e:"No alto a pressão é menor."},
+  {id:"d",t:"Porque as montanhas ficam sempre em altas latitudes.",e:"Há montanhas altas até perto do Equador, como o Chimborazo."}]},
+ {tipo:"mc",p:"As massas de ar se deslocam:",alts:[
+  {id:"a",t:"de áreas de alta pressão para áreas de baixa pressão, levando temperatura e umidade do lugar onde se formaram.",ok:true,e:"Exemplo: a Massa Tropical Atlântica (mTa) leva ar quente e úmido para a costa brasileira."},
+  {id:"b",t:"de áreas de baixa pressão para áreas de alta pressão, sem levar nenhuma característica.",e:"O sentido está invertido, e elas levam temperatura e umidade."},
+  {id:"c",t:"apenas dentro dos oceanos, como as correntes marítimas.",e:"Massas de ar são porções de ar; correntes são de água."},
+  {id:"d",t:"sempre da Linha do Equador para o Polo Sul, em linha reta.",e:"Elas se formam em vários lugares e se movem conforme a pressão."}]},
+ {tipo:"mc",p:"A Massa Tropical Atlântica (mTa) forma-se no sul do Oceano Atlântico e leva para a costa brasileira ar:",alts:[
+  {id:"a",t:"quente e úmido.",ok:true,e:"Ela se origina perto do Trópico de Capricórnio, sobre o oceano."},
+  {id:"b",t:"frio e seco.",e:"Ar frio vem de massas polares; a mTa é tropical e marítima."},
+  {id:"c",t:"quente e seco, vindo do deserto.",e:"Ela se forma sobre o oceano, por isso é úmida."},
+  {id:"d",t:"com neve.",e:"A mTa é quente."}]},
+ {tipo:"mc",p:"Segundo o livro, o aquecimento global pode provocar:",alts:[
+  {id:"a",t:"derretimento das calotas polares, aumento do nível do mar e mais eventos extremos.",ok:true,e:"Também pode reduzir as chuvas em lugares secos, levando a secas e desertificação."},
+  {id:"b",t:"diminuição do nível do mar e mais gelo nas calotas polares.",e:"É o contrário: o gelo derrete e o mar sobe."},
+  {id:"c",t:"aumento das chuvas em todas as áreas secas, o que ajuda a agricultura.",e:"Ele pode diminuir as chuvas em lugares já pouco úmidos."},
+  {id:"d",t:"o fim do efeito estufa.",e:"Ele intensifica o efeito estufa."}]},
+ {tipo:"mc",p:"O aquecimento global é chamado de “antropogênico” porque:",alts:[
+  {id:"a",t:"seria provocado principalmente pela ação humana.",ok:true,e:"“Antropo” = humanidade; “gênico” = origem."},
+  {id:"b",t:"acontece só na Antártida.",e:"A palavra não tem relação com a Antártida."},
+  {id:"c",t:"foi descoberto por pescadores peruanos.",e:"Quem foi percebido por pescadores peruanos foi o El Niño."},
+  {id:"d",t:"é causado só pela atividade do Sol.",e:"A palavra indica responsabilidade humana."}]},
+ {tipo:"mc",p:"Os pescadores do Peru perceberam o El Niño porque:",alts:[
+  {id:"a",t:"as águas do Pacífico, normalmente frias, esquentaram e os peixes diminuíram.",ok:true,e:"Como acontecia perto do Natal, o fenômeno recebeu o nome “o menino” (Menino Jesus)."},
+  {id:"b",t:"as águas ficaram mais frias e os peixes aumentaram muito.",e:"No El Niño as águas esquentam e os peixes diminuem."},
+  {id:"c",t:"o mar congelou no verão.",e:"Isso não acontece no El Niño."},
+  {id:"d",t:"começou a nevar no litoral peruano.",e:"Não é essa a característica do El Niño."}]},
+ {tipo:"mc",p:"Nas grandes cidades, a impermeabilização do solo pelo asfalto:",alts:[
+  {id:"a",t:"dificulta a infiltração da água da chuva e aumenta o risco de enchentes.",ok:true,e:"A água não infiltra e satura rios, córregos e galerias."},
+  {id:"b",t:"acaba com as enchentes.",e:"Ela piora as enchentes."},
+  {id:"c",t:"faz a água da chuva ficar ácida.",e:"A chuva ácida vem da queima de combustíveis fósseis."},
+  {id:"d",t:"não tem relação nenhuma com a chuva.",e:"Ela muda o caminho da água da chuva."}]},
+ {tipo:"mc",p:"A chuva ácida, que corrói monumentos e altera matas e lagos, é causada principalmente:",alts:[
+  {id:"a",t:"pela queima de combustíveis fósseis, que lança substâncias que formam ácidos na água da chuva.",ok:true,e:"Uma delas é o ácido sulfúrico."},
+  {id:"b",t:"pelo excesso de árvores nas cidades.",e:"Árvores não causam chuva ácida."},
+  {id:"c",t:"pela água do mar que evapora.",e:"A evaporação do mar não deixa a chuva ácida."},
+  {id:"d",t:"pela camada de ozônio.",e:"A camada de ozônio filtra a radiação ultravioleta."}]},
+ {tipo:"mc",p:"A geada se forma:",alts:[
+  {id:"a",t:"quando o orvalho congela, em noites frias e com poucas nuvens.",ok:true,e:"Sem nuvens, a atmosfera retém menos calor e a temperatura cai muito de madrugada."},
+  {id:"b",t:"quando chove muito forte durante o verão.",e:"Isso não forma geada."},
+  {id:"c",t:"quando o ar quente fica preso embaixo do ar frio.",e:"Isso não descreve a geada."},
+  {id:"d",t:"quando há muitas nuvens e calor.",e:"A geada precisa de frio e céu com poucas nuvens."}]},
+ {tipo:"mc",p:"Um mar que se comunica com o oceano apenas por um estreito ou canal, como o Mar Mediterrâneo, é chamado de:",alts:[
+  {id:"a",t:"mar interior (ou continental).",ok:true,e:"O Mar Negro e o Mar Vermelho são outros exemplos."},
+  {id:"b",t:"mar fechado.",e:"O mar fechado não tem ligação nenhuma com o oceano (Mar Morto, Cáspio)."},
+  {id:"c",t:"mar aberto.",e:"O mar aberto tem grande abertura para o oceano (Mar do Caribe)."},
+  {id:"d",t:"oceano glacial.",e:"Oceanos glaciais são o Ártico e o Antártico."}]},
+ {tipo:"mc",p:"As marés (subida e descida do nível do mar) são provocadas:",alts:[
+  {id:"a",t:"pela atração gravitacional do Sol e da Lua.",ok:true,e:"Dá origem à maré alta (cheia) e à maré baixa."},
+  {id:"b",t:"pelo vento, que empurra a água para a praia.",e:"O vento forma as ondas."},
+  {id:"c",t:"pelo derretimento das geleiras todos os dias.",e:"Não é isso que causa as marés."},
+  {id:"d",t:"pela chuva ácida.",e:"A chuva ácida não tem relação com as marés."}]},
+ {tipo:"mc",p:"Seguindo um rio da nascente até a foz, um ponto mais próximo da NASCENTE está:",alts:[
+  {id:"a",t:"a montante.",ok:true,e:"A montante = em direção à nascente; a jusante = em direção à foz."},
+  {id:"b",t:"a jusante.",e:"A jusante fica mais perto da foz."},
+  {id:"c",t:"no estuário.",e:"Estuário é um tipo de foz."},
+  {id:"d",t:"no delta.",e:"Delta também é um tipo de foz."}]},
+ {tipo:"mc",p:"Um rio que deságua por vários canais separados por ilhas tem a foz do tipo:",alts:[
+  {id:"a",t:"delta.",ok:true,e:"Exemplo do livro: rio Zambeze, em Moçambique."},
+  {id:"b",t:"estuário.",e:"No estuário há um único canal (o tipo mais comum no Brasil)."},
+  {id:"c",t:"meandro.",e:"Meandros são as curvas do rio."},
+  {id:"d",t:"nascente.",e:"A nascente é onde o rio começa."}]},
+ {tipo:"mc",p:"Sobre a água do planeta, é correto afirmar que:",alts:[
+  {id:"a",t:"cerca de 97,5% é salgada e só cerca de 2,5% é doce, e ela é distribuída de forma desigual.",ok:true,e:"Por isso muita gente sofre com a falta de água, mesmo num “planeta água”."},
+  {id:"b",t:"quase toda a água é doce e fica em rios e lagos.",e:"A maior parte é salgada; a água doce está muito em geleiras e no subsolo."},
+  {id:"c",t:"todos os países têm a mesma quantidade de água potável.",e:"A distribuição é muito desigual."},
+  {id:"d",t:"a agricultura quase não usa água.",e:"Cerca de 70% da água doce vai para a agricultura."}]},
+ {tipo:"mc",p:"A Região Norte do Brasil é a que mais usa o transporte por rios porque tem:",alts:[
+  {id:"a",t:"muitos rios de planície, poucas estradas e ferrovias e a tradição de usar barcos.",ok:true,e:"Essa é a explicação do livro (questão invertida da p. 122)."},
+  {id:"b",t:"só rios de planalto, com muitas cachoeiras.",e:"Rios de planalto dificultam a navegação."},
+  {id:"c",t:"a maior rede de rodovias do país.",e:"É o contrário: há escassez de outros meios de transporte."},
+  {id:"d",t:"rios intermitentes, que secam todo ano.",e:"Rios intermitentes são típicos do Sertão nordestino."}]},
+ {tipo:"rom",p:"Analise as afirmativas sobre TEMPO, CLIMA e FATORES CLIMÁTICOS (Capítulo 13):",itens:[
+  {n:"I",t:"“Hoje o céu amanheceu nublado” é uma frase sobre o tempo atmosférico.",ok:true,e:"Correta: fala de um momento específico."},
+  {n:"II",t:"Quanto mais perto da Linha do Equador, mais frio costuma ser o clima.",e:"Errada: perto do Equador costuma ser mais quente."},
+  {n:"III",t:"Corrente marítima fria diminui a evaporação e pode ajudar a formar desertos, como o do Atacama.",ok:true,e:"Correta: é o caso da corrente de Humboldt."},
+  {n:"IV",t:"Lugares próximos ao mar (maritimidade) costumam ter amplitude térmica MAIOR que os do interior.",e:"Errada: a maritimidade deixa a amplitude MENOR."}],
+  alts:[{id:"a",t:"Apenas I e III.",ok:true,e:"I e III são corretas; II e IV estão erradas."},{id:"b",t:"Apenas II e IV.",e:"II e IV são as erradas."},{id:"c",t:"Apenas I, II e III.",e:"A II é errada."},{id:"d",t:"Apenas III e IV.",e:"A IV é errada e faltou a I."}]},
+ {tipo:"rom",p:"Analise as afirmativas sobre os FENÔMENOS URBANOS (Capítulos 13 e 15):",itens:[
+  {n:"I",t:"Na ilha de calor, o asfalto e o concreto absorvem muita energia do Sol e esquentam a cidade.",ok:true,e:"Correta: asfalto + concreto = mais calor acumulado."},
+  {n:"II",t:"Na inversão térmica, uma camada de ar quente fica sobre o ar frio perto do chão e prende a poluição.",ok:true,e:"Correta: o ar quente funciona como uma “tampa”."},
+  {n:"III",t:"A inversão térmica é mais comum no verão.",e:"Errada: ela ocorre geralmente no inverno."},
+  {n:"IV",t:"As enchentes são fenômenos sociais, agravados pela impermeabilização do solo e pelo lixo.",ok:true,e:"Correta: a cheia é natural, mas a enchente depende da ocupação sem planejamento."}],
+  alts:[{id:"a",t:"Apenas I, II e IV.",ok:true,e:"Só a III está errada."},{id:"b",t:"Apenas I e III.",e:"A III é errada e faltaram II e IV."},{id:"c",t:"Apenas II e III.",e:"A III é errada."},{id:"d",t:"Todas as afirmativas.",e:"A III é errada."}]},
+ {tipo:"rom",p:"Analise as afirmativas sobre os RIOS e as HIDRELÉTRICAS (Capítulos 19 e 20):",itens:[
+  {n:"I",t:"Rios de planície têm águas velozes e são os mais indicados para gerar energia.",e:"Errada: quem tem águas velozes e serve para energia são os rios de planalto."},
+  {n:"II",t:"Na hidrelétrica, a água represada pela barragem faz girar as turbinas.",ok:true,e:"Correta: depois o gerador produz a energia, que é transmitida."},
+  {n:"III",t:"A Amazônia tem o maior potencial hidrelétrico, mas usinas como Belo Monte geraram polêmica por prejudicar indígenas e ribeirinhos.",ok:true,e:"Correta: também houve degradação do ambiente amazônico."},
+  {n:"IV",t:"As eclusas permitem que os barcos vençam desníveis dos rios e são construídas em barragens.",ok:true,e:"Correta: elas tornam o rio navegável (hidrovia)."}],
+  alts:[{id:"a",t:"Apenas II, III e IV.",ok:true,e:"Só a I está errada."},{id:"b",t:"Apenas I e II.",e:"A I é errada."},{id:"c",t:"Apenas I, III e IV.",e:"A I é errada e faltou a II."},{id:"d",t:"Todas as afirmativas.",e:"A I é errada."}]}
+];
+
+/* ====== EMBARALHAMENTO COM SEMENTE FIXA (mulberry32) — correta guardada pelo id ====== */
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+var rnd=mulberry32(291026748);
+Q.forEach(function(q){ if(q.alts){ var arr=q.alts.slice(); for(var i=arr.length-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)); var tmp=arr[i]; arr[i]=arr[j]; arr[j]=tmp; } q.ordem=arr; } });
+var OBJ=Q.length;
+
+/* ====== ESTADO ====== */
+var CHAVE=KIT+'_simulado_v1'; var mem={}; var estado=carregar();
+function carregar(){ try{ var s=localStorage.getItem(CHAVE); if(s) return JSON.parse(s);}catch(e){ if(mem[CHAVE]) return JSON.parse(mem[CHAVE]); } return {resp:{},enviado:false}; }
+function salvar(){ var s=JSON.stringify(estado); try{ localStorage.setItem(CHAVE,s);}catch(e){ mem[CHAVE]=s; } var d=new Date(); document.getElementById('salvo').textContent='💾 Salvo às '+d.toLocaleTimeString('pt-BR')+' de '+d.toLocaleDateString('pt-BR'); }
+var LETRAS='ABCDEFGHJKLMNPQRSTUVWXYZ';
+function gerarCodigo(ac){ var xx=(ac<10?'0':'')+ac; var yy=LETRAS[Math.floor(Math.random()*LETRAS.length)]+LETRAS[Math.floor(Math.random()*LETRAS.length)]; return 'SIM-'+xx+'-'+yy; }
+function respondida(i){ var r=estado.resp[i]; return !(r===undefined||r===null||r===''); }
+function acertou(i){ var q=Q[i], r=estado.resp[i]; var a=q.alts.filter(function(x){return x.id===r;})[0]; return !!(a&&a.ok); }
+
+function render(){
+  var c=document.getElementById('questoes'); var h=''; var G=estado.gabarito;
+  Q.forEach(function(q,i){
+    var tipoTxt={mc:'Múltipla escolha',rom:'Números romanos'}[q.tipo];
+    h+='<div class="q" id="q'+i+'"><span class="tipo '+q.tipo+'">'+tipoTxt+'</span><div class="num">Questão '+(i+1)+' de '+Q.length+'</div><h3>'+q.p+'</h3>';
+    if(q.tipo==='rom'){
+      q.itens.forEach(function(it){ var cls='afirm'+(G?(it.ok?' ok':' no'):''); h+='<div class="'+cls+'">'+it.n+'. '+it.t+(G?'<div class="exp show">'+(it.ok?'✅ ':'❌ ')+it.e+'</div>':'')+'</div>'; });
+    }
+    q.ordem.forEach(function(a,k){
+      var letra='abcd'[k]; var sel=estado.resp[i]===a.id; var cls='alt'+(sel?' sel':'');
+      if(G){ if(a.ok) cls+=' certa'; else if(sel) cls+=' marcada-errada'; else cls+=' errada'; }
+      h+='<label class="'+cls+'"><input type="radio" name="q'+i+'" value="'+a.id+'" '+(sel?'checked':'')+' '+(estado.enviado?'disabled':'')+' onchange="marcar('+i+',\''+a.id+'\')"> <b>'+letra+')</b> '+a.t+(G?'<div class="exp show">'+(a.ok?'✅ ':'')+a.e+'</div>':'')+'</label>';
+    });
+    h+='</div>';
+  });
+  c.innerHTML=h; atualizarBarra(); if(estado.enviado) mostrarEnviado();
+}
+function marcar(i,v){ if(estado.enviado) return; estado.resp[i]=v; salvar(); var q=document.getElementById('q'+i); var labs=q.querySelectorAll('.alt'); for(var k=0;k<labs.length;k++){ labs[k].classList.toggle('sel', labs[k].querySelector('input').value===v); } atualizarBarra(); }
+function atualizarBarra(){ var n=0; Q.forEach(function(q,i){ if(respondida(i)) n++; }); document.getElementById('barra').style.width=(n/Q.length*100)+'%'; var b=document.getElementById('btn-enviar'); if(!estado.enviado){ b.disabled=n<Q.length; b.textContent=n<Q.length?'📨 Enviar simulado ('+n+' de '+Q.length+' respondidas)':'📨 Enviar simulado'; } }
+function enviar(){
+  if(estado.enviado) return;
+  var ac=0; Q.forEach(function(q,i){ if(acertou(i)===true) ac++; });
+  estado.acertos=ac; estado.objetivas=OBJ; estado.codigo=gerarCodigo(ac); estado.enviado=true; estado.concluido=true; estado.concluidoEm=new Date().toISOString();
+  salvar(); render(); window.scrollTo({top:0,behavior:'smooth'});
+}
+function mostrarEnviado(){
+  var b=document.getElementById('btn-enviar'); b.disabled=true; b.textContent='✅ Simulado enviado — respostas travadas';
+  document.getElementById('codigo').classList.add('show'); document.getElementById('cod').textContent=estado.codigo;
+  document.getElementById('codtxt').textContent='Anote este código para os pais. Ele abre o gabarito comentado.';
+  document.getElementById('gab').classList.add('show'); document.getElementById('fim').style.display='block';
+}
+function abrirGab(){ var v=document.getElementById('gab-in').value.trim().toUpperCase(); var m=document.getElementById('gab-msg'); if(v===estado.codigo||v==='PAIS-77'){ estado.gabarito=true; salvar(); render(); m.innerHTML='<span style="color:#8fe0b4">Gabarito liberado: '+estado.acertos+' acertos de '+OBJ+' questões.</span>'; } else { m.innerHTML='<span style="color:#ffb3b3">Código incorreto.</span>'; } }
+function exportar(){ var blob=new Blob([JSON.stringify(estado,null,2)],{type:'application/json'}); var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='simulado_balao-sonda.json'; a.click(); }
+function importar(ev){ var f=ev.target.files[0]; if(!f) return; var r=new FileReader(); r.onload=function(){ try{ estado=JSON.parse(r.result); salvar(); render(); mostrarModal('✅ Progresso importado!',false);}catch(e){ mostrarModal('❌ Arquivo inválido.',false);} }; r.readAsText(f); }
+var acaoZerar=null;
+function pedirZerar(){ acaoZerar=true; mostrarModal('Apagar as respostas deste Simulado? (Se ele já foi enviado, o código e a conclusão são mantidos.)',true); }
+function mostrarModal(txt,confirmar){ document.getElementById('modal-txt').innerHTML=txt; document.getElementById('modal').classList.add('show'); document.getElementById('modal-cancel').style.display=confirmar?'inline-block':'none'; document.getElementById('modal-ok').textContent=confirmar?'Sim, apagar':'Ok';
+  document.getElementById('modal-ok').onclick=function(){ if(confirmar&&acaoZerar){ if(!estado.enviado){ estado={resp:{},enviado:false}; salvar(); render(); } else { mostrarModal('O Simulado já foi enviado: as respostas ficam travadas. Para refazer do zero, use "Zerar o kit inteiro" no Início.',false); acaoZerar=null; return; } } acaoZerar=null; fecharModal(); }; }
+function fecharModal(){ document.getElementById('modal').classList.remove('show'); }
+
+if(checarTrava()){ render(); }
+</script>
+</body>
+</html>

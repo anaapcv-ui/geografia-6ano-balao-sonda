@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumo · Balão-Sonda · Geografia 6º</title>
+<style>
+  :root{--palco:#0b1426;--palco2:#12203a;--aco:#22324f;--aco2:#33496e;--ambar:#ffcf33;--magenta:#ff8a3d;--ciano:#3fd0e8;--verde:#4ade80;--vermelho:#ff5d5d;--texto:#eaf0f8;--cinza:#8f98b2}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:radial-gradient(1100px 480px at 50% -10%,#16305a,#0b1426 60%),var(--palco);color:var(--texto);line-height:1.6;padding-bottom:60px}
+  header{background:linear-gradient(120deg,#0e1a3e,#2a1840);padding:26px 18px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.5);border-bottom:4px solid var(--amarelo,#ffcf33);border-bottom-color:var(--ambar)}
+  header .selo{font-size:.78rem;letter-spacing:2px;color:#ffe9ad;text-transform:uppercase}
+  header h1{font-size:1.5rem;margin:6px 0 2px}
+  header p{color:#e7dcf5;font-size:.92rem}
+  .wrap{max-width:900px;margin:0 auto;padding:16px}
+  .barra-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
+  .barra-nav a{background:var(--palco2);color:var(--texto);text-decoration:none;padding:7px 12px;border-radius:20px;font-size:.85rem;border:1px solid var(--aco)}
+  .barra-nav a.on{background:var(--ambar);color:#2a2000;font-weight:bold}
+  .barra-nav a.lock{opacity:.5}
+  .intro{background:var(--palco2);border:1px solid var(--aco);border-radius:14px;padding:16px;margin-bottom:16px}
+  .intro h2{color:var(--ambar);font-size:1.1rem;margin-bottom:8px}
+  .sec{margin:26px 0 12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .sec h2{font-size:1.25rem}
+  .sec .pill{font-size:.7rem;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:12px;background:var(--ciano);color:#042030;font-weight:bold}
+  .sec .pill.c16{background:var(--magenta);color:#3a1500}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .card{background:var(--palco2);border:1px solid var(--aco);border-radius:14px;padding:14px;border-top:4px solid var(--ciano)}
+  .card.c16{border-top-color:var(--magenta)}
+  .card h3{font-size:1rem;margin-bottom:8px}
+  .card ul{margin-left:18px}
+  .card li{margin-bottom:5px;font-size:.93rem}
+  .card b{color:var(--ciano)}
+  .card.c16 b{color:var(--magenta)}
+  .postit{background:#ffe88a;color:#3a2a00;border-radius:4px;padding:12px 14px;font-size:.92rem;box-shadow:3px 4px 10px rgba(0,0,0,.4);transform:rotate(-1deg);margin:12px 0}
+  .postit b{color:#7a4a00}
+  .peg{background:#3a1414;border:2px solid var(--vermelho);border-radius:12px;padding:12px 14px;margin:12px 0;font-size:.92rem}
+  .peg b{color:#ffb3b3}
+  .flips{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+  .flip{perspective:900px;height:200px;cursor:pointer}
+  .flip .inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .flip.on .inner{transform:rotateY(180deg)}
+  .flip .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:.88rem}
+  .flip .front{background:linear-gradient(135deg,#1d2950,#12203a);border:1px solid var(--aco2);font-weight:bold}
+  .flip .front small{display:block;color:var(--cinza);font-weight:normal;font-size:.72rem;margin-top:6px}
+  .flip .back{background:#0e2b1f;border:1px solid var(--verde);transform:rotateY(180deg)}
+  .tabela{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:8px}
+  .tabela th,.tabela td{border:1px solid var(--aco);padding:7px 9px;text-align:left;vertical-align:top}
+  .tabela th{background:#161f3c}
+  .fluxo{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin-top:8px}
+  .fluxo .et{flex:1;min-width:120px;background:#12193a;border:1px solid var(--aco2);border-left:4px solid var(--magenta);border-radius:0 10px 10px 0;padding:10px;font-size:.86rem}
+  .fluxo .et b{color:var(--magenta)}
+  .gloss{columns:2;column-gap:18px}
+  .gloss div{break-inside:avoid;margin-bottom:8px;font-size:.9rem}
+  .gloss b{color:var(--ambar)}
+  @media(max-width:600px){.gloss{columns:1}}
+  .fim{background:linear-gradient(120deg,#122a1f,#163a2a);border:2px solid var(--verde);border-radius:16px;padding:18px;margin-top:24px;text-align:center}
+  .fim h3{color:#8fe0b4;margin-bottom:8px}
+  .fim button{background:var(--verde);color:#04231a;border:none;border-radius:10px;padding:12px 20px;font-size:1rem;font-weight:bold;margin:6px}
+  .fim button:disabled{background:#1c2340;color:#6f7794;cursor:not-allowed}
+  .fim a.btn{display:inline-block;margin:6px;background:var(--ciano);color:#042030;text-decoration:none;font-weight:bold;padding:12px 20px;border-radius:10px}
+  .fim a.btn.off{background:#1c2340;color:#6f7794;pointer-events:none}
+  .painel{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;background:var(--palco2);border:1px solid var(--aco);border-radius:12px;padding:10px 14px;margin-bottom:16px;font-size:.85rem}
+  .mini{background:var(--palco);color:var(--texto);border:1px solid var(--aco2);border-radius:8px;padding:6px 10px;font-size:.8rem;cursor:pointer;font-family:inherit}
+  .modal-bg{display:none;position:fixed;inset:0;background:rgba(5,4,8,.96);z-index:50;align-items:center;justify-content:center;padding:16px}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--palco2);border:1px solid var(--ciano);border-radius:14px;padding:22px;max-width:440px;text-align:center}
+  .modal p{margin-bottom:14px}
+  .modal .big{font-size:2.2rem}
+  .modal a{display:inline-block;background:var(--ciano);color:#042030;border-radius:8px;padding:10px 18px;font-weight:bold;text-decoration:none}
+  .rodape{text-align:center;color:var(--cinza);font-size:.8rem;margin-top:24px}
+  .sec .pill.c15{background:var(--magenta);color:#3a1500}
+  .sec .pill.c19{background:var(--verde);color:#04231a}
+  .card.c15{border-top-color:var(--magenta)} .card.c15 b{color:var(--magenta)}
+  .card.c19{border-top-color:var(--verde)} .card.c19 b{color:var(--verde)}
+  .flip .back b{color:#8fe0b4}
+</style>
+</head>
+<body>
+<header>
+  <div class="selo">Balão-Sonda · Geografia 6º ano · CCF</div>
+  <h1>🗺️ Resumo</h1>
+  <p>Tudo que cai, em cards, cartas e post-its · Caps. 13, 14, 15, 19 e 20</p>
+</header>
+
+<div class="wrap">
+  <nav class="barra-nav" id="nav">
+    <a href="leitura-guiada.html">📖 Leitura Guiada</a>
+    <a href="quiz.html">🎯 Quiz</a>
+    <a class="on" href="resumo.html">🗺️ Resumo</a>
+    <a href="simulado.html" data-etapa="simulado">📝 Simulado</a>
+    <a href="index.html">🏠 Início</a>
+  </nav>
+
+  <div class="intro">
+    <h2>🎈 O relatório de voo</h2>
+    <p>Aqui está o voo inteiro em uma página: primeiro o <b>ar</b> (tempo, clima e fenômenos) e depois a <b>água</b> (oceanos, rios e usinas). Os cards com <b>⭐</b> são os pontos que a revisão da professora mais destacou. <b>Toque nas cartas</b> para virar. Leia até o fim e clique em <b>“Li o resumo até o fim”</b> para destravar o Simulado.</p>
+  </div>
+
+  <div class="painel"><span id="salvo">📏 Rolagem máxima: 0%</span><button class="mini" onclick="exportar()">📥 Exportar</button></div>
+
+  <!-- ================== AR ================== -->
+  <div class="sec"><span class="pill">Cap. 13</span><h2>🌦️ Tempo, clima e atmosfera</h2></div>
+  <div class="grid">
+    <div class="card"><h3>⭐ Tempo × clima</h3><ul>
+      <li><b>Tempo:</b> como a atmosfera está <b>agora</b> (chuva, vento, nuvens, calor).</li>
+      <li><b>Clima:</b> o <b>padrão de muitos anos</b> num lugar (registros de várias décadas).</li>
+      <li>O tempo muda fácil; o clima muda devagar.</li></ul></div>
+    <div class="card"><h3>🔬 Quem estuda</h3><ul>
+      <li><b>Meteorologia:</b> estuda os fenômenos para <b>prever o tempo</b>.</li>
+      <li><b>Climatologia:</b> liga os fenômenos ao relevo, à vegetação, à ocupação do solo e à ação humana. No campo, ajuda a escolher o que plantar.</li></ul></div>
+    <div class="card"><h3>🎈 Atmosfera</h3><ul>
+      <li><b>Nitrogênio 78% + oxigênio 21%</b> = 99%. O resto: vapor de água, gás carbônico, argônio.</li>
+      <li><b>Efeito estufa natural:</b> deixa o Sol entrar e segura parte do calor. É bom para a vida!</li>
+      <li>Camadas: <b>troposfera</b> (tempo, mais densa) → <b>estratosfera</b> (ozônio) → mesosfera → termosfera → <b>exosfera</b> (satélites).</li>
+      <li>Ozônio se recuperando graças ao <b>Protocolo de Montreal (1987)</b>.</li></ul></div>
+  </div>
+
+  <div class="sec"><span class="pill">Cap. 13</span><h2>🧭 Elementos × fatores do clima</h2></div>
+  <table class="tabela">
+    <thead><tr><th>⭐ ELEMENTOS (o que se mede)</th><th>Instrumento</th><th>⭐ FATORES (o que define o clima)</th><th>Efeito</th></tr></thead>
+    <tbody>
+      <tr><td><b>Pressão atmosférica</b> (peso do ar)</td><td>barômetro</td><td><b>Latitude</b></td><td>Perto do Equador = mais quente</td></tr>
+      <tr><td><b>Temperatura</b> (amplitude e média)</td><td>termômetro</td><td><b>Altitude</b></td><td>Mais alto = mais frio e menor pressão</td></tr>
+      <tr><td><b>Umidade</b> (vapor de água)</td><td>higrômetro</td><td><b>Maritimidade</b></td><td>Perto do mar = menor amplitude térmica</td></tr>
+      <tr><td><b>Precipitação</b> (chuva, granizo, neve)</td><td>pluviômetro</td><td><b>Continentalidade</b></td><td>Interior = maior amplitude térmica</td></tr>
+      <tr><td colspan="2" style="color:var(--cinza)">Amplitude térmica = máxima − mínima</td><td><b>Correntes marítimas</b> e <b>massas de ar</b></td><td>Quente = úmido; fria = seco. Massas de ar levam calor/frio e umidade.</td></tr>
+    </tbody>
+  </table>
+  <div class="peg">⚠️ <b>Pegadinha:</b> “pressão atmosférica” é <b>ELEMENTO</b>, não fator! (Questão da p. 26 do livro.)</div>
+
+  <div class="grid" style="margin-top:12px">
+    <div class="card"><h3>⭐ Quanto mais alto…</h3><ul>
+      <li>↑ altitude → <b>↓ temperatura</b> e <b>↓ pressão</b>. O ar fica mais frio e menos denso.</li>
+      <li><b>Taubaté</b> (21,7 °C) × <b>Campos do Jordão</b> (14,8 °C), a menos de 50 km de distância.</li>
+      <li><b>Chimborazo</b>: perto do Equador e com neve no topo.</li>
+      <li>Futebol a mais de 4 000 m: o oxigênio não acaba, mas a <b>pressão menor</b> faz entrar menos oxigênio em cada respiração.</li></ul></div>
+    <div class="card"><h3>⭐ Por que o Atacama é tão seco?</h3><ul>
+      <li>🌊 <b>Corrente fria de Humboldt</b>: diminui a evaporação.</li>
+      <li>⛰️ <b>Barreira dos Andes</b>.</li>
+      <li>🌀 <b>Alta pressão subtropical</b>.</li>
+      <li>Os três juntos reduzem a formação e a chegada de chuvas.</li></ul></div>
+    <div class="card"><h3>⭐ Correntes marítimas</h3><ul>
+      <li><b>Quentes</b> (saem dos trópicos): + evaporação = litoral <b>úmido</b>. Ex.: Corrente do Brasil, Corrente do Golfo.</li>
+      <li><b>Frias</b> (vêm dos polos): − evaporação = <b>seco</b>, até desertos. Ex.: Humboldt (Atacama), Canárias (Saara).</li>
+      <li>São “rios dentro do mar”, guiados pelo contorno dos continentes e pela rotação da Terra.</li></ul></div>
+  </div>
+
+  <div class="sec"><span class="pill">Cap. 13</span><h2>📊 ⭐ Ler mapas e climogramas</h2></div>
+  <div class="grid">
+    <div class="card"><h3>📈 Anatomia do climograma</h3>
+      <svg viewBox="0 0 300 150" style="width:100%;height:auto" role="img" aria-label="Exemplo de climograma">
+        <rect x="0" y="0" width="300" height="150" rx="8" fill="#0e1830"/>
+        <g fill="#3fd0e8" opacity=".85"><rect x="30" y="40" width="14" height="80"/><rect x="52" y="30" width="14" height="90"/><rect x="74" y="35" width="14" height="85"/><rect x="96" y="55" width="14" height="65"/><rect x="118" y="80" width="14" height="40"/><rect x="140" y="95" width="14" height="25"/><rect x="162" y="100" width="14" height="20"/><rect x="184" y="98" width="14" height="22"/><rect x="206" y="90" width="14" height="30"/><rect x="228" y="80" width="14" height="40"/><rect x="250" y="65" width="14" height="55"/><rect x="272" y="50" width="14" height="70"/></g>
+        <polyline points="37,52 59,52 81,53 103,55 125,57 147,58 169,58 191,57 213,55 235,54 257,53 279,52" fill="none" stroke="#ff8a3d" stroke-width="2.5"/>
+        <text x="8" y="16" fill="#3fd0e8" font-size="10">barras: chuva do mês</text><text x="170" y="16" fill="#ff8a3d" font-size="10">linha: temperatura média</text>
+        <text x="30" y="138" fill="#c9d6f5" font-size="9">J  F  M  A  M  J  J  A  S  O  N  D (meses)</text>
+      </svg>
+      <ul><li>Olhe os <b>meses</b>, a <b>chuva</b> e a <b>temperatura</b>.</li><li>Exemplo do livro: <b>Belém (PA)</b>, com muita chuva e calor o ano todo e mais chuva nos 5 primeiros meses.</li></ul></div>
+    <div class="card"><h3>🗺️ Mapa: 3 coisas antes de tudo</h3><ul>
+      <li><b>Título</b>: do que o mapa trata?</li>
+      <li><b>Cores</b>: o que cada cor representa?</li>
+      <li><b>Legenda</b>: a “chave” para ler os símbolos.</li>
+      <li>No <b>mapa de isotermas</b> (“iso” = igual; “terma” = temperatura), as áreas mais quentes da cidade aparecem em forma de <b>ilhas</b>: daí o nome “ilha de calor”.</li></ul></div>
+  </div>
+
+  <div class="sec"><span class="pill c15">Caps. 13, 14 e 15</span><h2>🏙️ Fenômenos que mexem com a nossa vida</h2></div>
+  <p style="font-size:.9rem;color:var(--cinza)">Toque nas cartas para ver a resposta.</p>
+  <div class="flips">
+    <div class="flip" onclick="this.classList.toggle('on')"><div class="inner"><div class="face front">⭐ Ilha de calor<small>o que é? por quê?</small></div><div class="face back">Cidade mais quente que o entorno. <b>Asfalto + concreto</b> absorvem e devolvem calor; <b>árvores + sombra</b> resfriam.</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('on')"><div class="inner"><div class="face front">⭐ Inversão térmica<small>como acontece?</small></div><div class="face back">Ar <b>frio</b> preso embaixo e ar <b>quente</b> por cima, como uma <b>“tampa”</b>. Mais comum no inverno. A poluição fica presa perto do chão.</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('on')"><div class="inner"><div class="face front">Chuva ácida<small>origem e efeito</small></div><div class="face back">Queima de <b>combustíveis fósseis</b> → ácidos na água da chuva → <b>corrói monumentos</b> e altera matas e lagos.</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('on')"><div class="inner"><div class="face front">Enchente<small>natural ou social?</small></div><div class="face back"><b>Social</b>: cheia (natural) + ocupação sem planejamento. <b>Asfalto e lixo</b> pioram. A Meteorologia avisa, mas não acaba com ela.</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('on')"><div class="inner"><div class="face front">Geada<small>quando se forma?</small></div><div class="face back">Orvalho congela em noites <b>frias e com poucas nuvens</b>. Pode acabar com uma plantação.</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('on')"><div class="inner"><div class="face front">Estiagem<small>o que é?</small></div><div class="face back">Semanas sem chuva, difícil de prever. No clima tropical brasileiro acontece no <b>inverno</b> e baixa o nível dos rios.</div></div></div>
+  </div>
+
+  <div class="grid" style="margin-top:14px">
+    <div class="card c15"><h3>⭐ El Niño × La Niña</h3>
+      <table class="tabela"><tr><th></th><th>El Niño</th><th>La Niña</th></tr>
+        <tr><td>Águas do Pacífico</td><td><b>mais quentes</b> que a média</td><td><b>mais frias</b> que a média</td></tr></table>
+      <ul style="margin-top:8px"><li><b>Nome:</b> pescadores do Peru, perto do Natal (“o menino”).</li>
+      <li>Ciclos irregulares de <b>2 a 7 anos</b>; os peixes diminuem.</li>
+      <li><b>Brasil (El Niño):</b> 🔥 seca no <b>Nordeste e na Amazônia</b> · 🌡️ inverno mais quente no <b>Sudeste</b> · 🌧️ mais chuva no <b>Sul</b>.</li>
+      <li>São <b>tendências, não regras fixas</b>: variam por região e estação.</li></ul></div>
+    <div class="card c15"><h3>🌡️ Aquecimento global</h3><ul>
+      <li>Aumento da temperatura média, ligado a indústrias, cidades e queimadas (mais CO₂ = efeito estufa <b>intensificado</b>).</li>
+      <li>Efeitos: <b>calotas derretem</b>, <b>nível do mar sobe</b>, mais <b>eventos extremos</b> e <b>menos chuva em áreas secas</b>.</li>
+      <li><b>Antropogênico</b> = causado pela humanidade.</li>
+      <li>O livro trata como teoria ainda em discussão.</li></ul></div>
+  </div>
+  <div class="postit">📌 <b>Dica de prova:</b> se a questão falar de <b>“tampa”</b> ou de <b>poluição presa no inverno</b>, é <b>inversão térmica</b>. Se falar de <b>asfalto, concreto e calor na cidade</b>, é <b>ilha de calor</b>. Se falar de <b>monumento corroído</b>, é <b>chuva ácida</b>.</div>
+
+  <!-- ================== ÁGUA ================== -->
+  <div class="sec"><span class="pill c19">Cap. 19</span><h2>🐋 Oceanos, mares e águas</h2></div>
+  <div class="grid">
+    <div class="card c19"><h3>Oceanos e mares</h3><ul>
+      <li>Cerca de <b>70%</b> da superfície é água (<b>hidrosfera</b>).</li>
+      <li>5 oceanos: <b>Pacífico</b> (maior e mais profundo), <b>Atlântico</b> (melhor para navegar e para a economia), Índico, Glacial Antártico e Glacial Ártico.</li>
+      <li>Mares: <b>fechado</b> (sem ligação; Mar Morto), <b>interior</b> (por estreito ou canal; Mediterrâneo), <b>aberto</b> (Caribe).</li>
+      <li>Movimentos: <b>ondas</b> (vento), <b>marés</b> (Sol e Lua) e <b>correntes</b>.</li></ul></div>
+    <div class="card c19"><h3>⭐ Oceanos sob pressão</h3><ul>
+      <li>🧴 <b>Plástico</b></li><li>🎣 <b>Pesca industrial</b>: a pesca predatória ignora a época de reprodução e pode acabar com cardumes inteiros.</li><li>🛢️ <b>Petróleo</b></li>
+      <li>Ser enorme não deixa o oceano a salvo da poluição.</li></ul></div>
+    <div class="card c19"><h3>💧 Água doce e ciclo</h3><ul>
+      <li><b>97,5% salgada</b> × <b>2,5% doce</b> (muita em geleiras e no subsolo). Mal distribuída → <b>estresse hídrico</b>.</li>
+      <li>Ciclo: <b>evaporação → nuvens → saturação → precipitação</b> (+ transpiração = evapotranspiração).</li>
+      <li>Aquíferos: <b>Guarani</b> (4 países) e <b>Alter do Chão</b> (maior do mundo, todo no Brasil, subaproveitado).</li>
+      <li>Cerca de <b>70%</b> da água doce vai para a agricultura.</li></ul></div>
+  </div>
+
+  <div class="sec"><span class="pill c19">Caps. 19 e 20</span><h2>🏞️ ⭐ O rio de ponta a ponta</h2></div>
+  <div class="fluxo">
+    <div class="et"><b>Nascente</b><br>onde nasce (ponto mais alto)</div>
+    <div class="et"><b>Curso superior</b><br>perto da nascente</div>
+    <div class="et"><b>Curso médio</b><br>meio do caminho; meandros = curvas</div>
+    <div class="et"><b>Curso inferior</b><br>perto da foz</div>
+    <div class="et"><b>Foz</b><br>estuário (1 canal) ou delta (vários canais com ilhas)</div>
+  </div>
+  <div class="flips" style="margin-top:12px">
+    <div class="flip" onclick="this.classList.toggle('on')"><div class="inner"><div class="face front">⭐ Rio de planalto<small>serve para…?</small></div><div class="face back">Maior declive, corredeiras e quedas, águas velozes → <b>ENERGIA</b> (hidrelétricas).</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('on')"><div class="inner"><div class="face front">⭐ Rio de planície<small>serve para…?</small></div><div class="face back">Baixo declive, meandros, águas calmas → <b>NAVEGAÇÃO</b> (hidrovias).</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('on')"><div class="inner"><div class="face front">Montante × jusante<small>qual é qual?</small></div><div class="face back"><b>Montante</b> = para o lado da <b>nascente</b>. <b>Jusante</b> = para o lado da <b>foz</b>. Margem direita: olhe para a foz.</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('on')"><div class="inner"><div class="face front">Regimes do rio<small>de onde vem a água?</small></div><div class="face back"><b>Pluvial</b> = chuva · <b>Nival</b> = neve/geleira · <b>Misto</b> = os dois. Rio <b>intermitente</b>: some na estiagem (Sertão).</div></div></div>
+  </div>
+
+  <div class="sec"><span class="pill c19">Cap. 20</span><h2>⚡ ⭐ As funções dos rios</h2></div>
+  <div class="fluxo">
+    <div class="et"><b>1. Água armazenada</b><br>a barragem represa o rio e forma um lago</div>
+    <div class="et"><b>2. Turbina gira</b><br>com a força da água</div>
+    <div class="et"><b>3. Gerador produz</b><br>a eletricidade</div>
+    <div class="et"><b>4. Energia é transmitida</b><br>até as cidades</div>
+  </div>
+  <div class="grid" style="margin-top:12px">
+    <div class="card c19"><h3>⭐ Hidrelétricas na Amazônia</h3><ul>
+      <li><b>Benefício:</b> grande geração de eletricidade (no Brasil, cerca de <b>62%</b> em 2022), com fonte <b>renovável</b>.</li>
+      <li><b>Impactos:</b> alagamentos, perda de biodiversidade, <b>deslocamento</b> de indígenas e ribeirinhos, <b>metano</b> da vegetação alagada.</li>
+      <li>Exemplos: <b>Belo Monte</b> (Xingu), <b>Jirau</b> e <b>Santo Antônio</b> (Madeira).</li>
+      <li>Decidir exige avaliar <b>energia, território e pessoas</b>.</li></ul></div>
+    <div class="card c19"><h3>🚢 Transporte fluvial</h3><ul>
+      <li>Rios de <b>planície</b>; <b>mais barato e menos poluente</b>, porém <b>mais lento</b>.</li>
+      <li><b>Eclusas</b> vencem desníveis; rio adaptado = <b>hidrovia</b>.</li>
+      <li>Principais: <b>Solimões-Amazonas</b>, Madeira, Paraguai, Tietê-Paraná.</li>
+      <li><b>Região Norte</b> usa mais: rios de planície, poucas estradas, tradição.</li></ul></div>
+    <div class="card c19"><h3>🌱 Irrigação</h3><ul>
+      <li>Regar a plantação de forma artificial onde a chuva não basta.</li>
+      <li>Norte de MG e Sertão nordestino, com água do <b>rio São Francisco</b>.</li>
+      <li>Problemas: <b>desperdício</b> e contaminação por agrotóxicos.</li></ul></div>
+  </div>
+
+  <div class="sec"><h2>⚠️ Alertas de pegadinha</h2></div>
+  <div class="peg"><b>Corrente fria</b> NÃO traz chuva: ela deixa o clima <b>seco</b>.</div>
+  <div class="peg"><b>El Niño</b> no Brasil: seca no <b>Nordeste</b>, chuva no <b>Sul</b> (não o contrário).</div>
+  <div class="peg"><b>Maritimidade</b> = amplitude térmica <b>MENOR</b>; <b>continentalidade</b> = <b>MAIOR</b>.</div>
+  <div class="peg">Hidrelétrica é <b>renovável</b>, mas <b>tem impactos</b>.</div>
+  <div class="postit">📌 <b>Climas do Brasil citados na revisão:</b> Equatorial · Tropical · Semiárido · Subtropical. No livro: Belém tem clima equatorial (chuva e calor o ano todo); o clima tropical tem estiagem no inverno; o Sertão tem clima semiárido, com rios temporários.</div>
+
+  <div class="sec"><h2>📚 Glossário de bordo</h2></div>
+  <div class="gloss">
+    <div><b>Amplitude térmica:</b> máxima − mínima de um período.</div>
+    <div><b>Antropogênico:</b> causado pela humanidade.</div>
+    <div><b>Aquífero:</b> água guardada no subsolo, em rochas porosas.</div>
+    <div><b>Barômetro:</b> mede a pressão atmosférica.</div>
+    <div><b>Climograma:</b> gráfico de chuva e temperatura mês a mês.</div>
+    <div><b>Eclusa:</b> “elevador” de barcos em barragens.</div>
+    <div><b>Estresse hídrico:</b> usa-se mais água do que a natureza repõe.</div>
+    <div><b>Higrômetro:</b> mede a umidade do ar.</div>
+    <div><b>Hidrovia:</b> rio adaptado para a navegação.</div>
+    <div><b>Isotermas:</b> linhas de mesma temperatura num mapa.</div>
+    <div><b>Jusante / montante:</b> lado da foz / lado da nascente.</div>
+    <div><b>Meandro:</b> curva do rio.</div>
+    <div><b>Pluviômetro:</b> mede a chuva.</div>
+    <div><b>Rio intermitente:</b> some e reaparece com a seca e a chuva.</div>
+  </div>
+
+  <div class="sec"><h2>✅ Estou preparado? (checklist da revisão)</h2></div>
+  <div class="card"><ul>
+    <li>Tempo × clima</li><li>Climas e fatores climáticos</li><li>Altitude e pressão</li><li>Ilha de calor e inversão térmica</li>
+    <li>El Niño e La Niña</li><li>Correntes marítimas e rios</li><li>Hidrelétricas e oceanos</li><li>Mapas e climogramas</li></ul></div>
+
+  <div class="fim" id="fim">
+    <h3 id="fim-h3">🔒 Próxima etapa: Simulado</h3>
+    <p id="fim-txt">Role até aqui e confirme a leitura para destravar o Simulado.</p>
+    <button id="btn-li" onclick="confirmarLeitura()" disabled>✅ Li o resumo até o fim</button>
+    <a class="btn off" id="btn-prox" href="simulado.html">📝 Pronto para o Simulado!</a>
+  </div>
+
+  <div class="rodape">Feito com carinho para o jovem aprendiz. 🎈</div>
+</div>
+
+<div class="modal-bg" id="lock">
+  <div class="modal">
+    <div class="big">🔒</div>
+    <p><b>Esta etapa ainda está trancada.</b></p>
+    <p id="lock-txt">Para abrir o Resumo, envie o Quiz.</p>
+    <a href="index.html">Voltar ao início</a>
+  </div>
+</div>
+
+<script>
+/* ====== TRILHA COM CADEADOS (módulo comum do kit) ====== */
+var KIT='balao_sonda_geo6';
+var TRILHA=[
+ {id:'leitura', chave:KIT+'_leitura_v1', nome:'Leitura Guiada', arquivo:'leitura-guiada.html', emoji:'📖'},
+ {id:'quiz', chave:KIT+'_quiz_v1', nome:'Quiz', arquivo:'quiz.html', emoji:'🎯'},
+ {id:'resumo', chave:KIT+'_resumo_v1', nome:'Resumo', arquivo:'resumo.html', emoji:'🗺️'},
+ {id:'simulado', chave:KIT+'_simulado_v1', nome:'Simulado', arquivo:'simulado.html', emoji:'📝'}
+];
+function lerJSON(k){ try{ var s=localStorage.getItem(k); return s?JSON.parse(s):null; }catch(e){ return null; } }
+function trilhaLiberada(){ var t=lerJSON(KIT+'_trilha_v1'); return !!(t&&t.liberadoPelosPais); }
+function etapaConcluida(id){ var e=TRILHA.filter(function(t){return t.id===id;})[0]; var d=lerJSON(e.chave); return !!(d&&d.concluido); }
+function podeAbrir(id){ var idx=TRILHA.map(function(t){return t.id;}).indexOf(id); if(idx<=0||trilhaLiberada()) return true; return etapaConcluida(TRILHA[idx-1].id); }
+function marcarNav(){
+  var links=document.querySelectorAll('#nav a[data-etapa]');
+  for(var i=0;i<links.length;i++){ var id=links[i].getAttribute('data-etapa'); if(!podeAbrir(id)){ links[i].classList.add('lock'); links[i].textContent='🔒 '+links[i].textContent.replace('🔒 ',''); } else { links[i].classList.remove('lock'); links[i].textContent=links[i].textContent.replace('🔒 ',''); } }
+}
+function checarTrava(){
+  if(podeAbrir('resumo')) return true;
+  var L=lerJSON(KIT+'_leitura_v1');
+  document.getElementById('lock-txt').textContent=(L&&L.concluido)?'Para abrir o Resumo, envie o Quiz.':'Para abrir o Resumo, conclua a Leitura Guiada e envie o Quiz.';
+  document.getElementById('lock').classList.add('show');
+  document.querySelector('.wrap').style.filter='blur(6px)';
+  return false;
+}
+
+/* ====== ESTADO DO RESUMO ====== */
+var CHAVE=KIT+'_resumo_v1'; var mem={}; var estado=carregar();
+function carregar(){ try{ var s=localStorage.getItem(CHAVE); if(s) return JSON.parse(s);}catch(e){ if(mem[CHAVE]) return JSON.parse(mem[CHAVE]); } return {rolagemMax:0}; }
+function salvar(){ var s=JSON.stringify(estado); try{ localStorage.setItem(CHAVE,s);}catch(e){ mem[CHAVE]=s; } document.getElementById('salvo').textContent='📏 Rolagem máxima: '+Math.round(estado.rolagemMax||0)+'%'; }
+function medirRolagem(){
+  var h=document.documentElement; var total=h.scrollHeight-h.clientHeight; var pct= total<=0?100:Math.min(100,(window.scrollY||h.scrollTop)/total*100);
+  if(pct>(estado.rolagemMax||0)){ estado.rolagemMax=pct; salvar(); }
+  var b=document.getElementById('btn-li'); if(!estado.concluido && (estado.rolagemMax||0)>=90){ b.disabled=false; }
+}
+function confirmarLeitura(){ if(estado.concluido) return; estado.concluido=true; estado.concluidoEm=new Date().toISOString(); salvar(); atualizarFim(); }
+function atualizarFim(){
+  var h3=document.getElementById('fim-h3'), txt=document.getElementById('fim-txt'), b=document.getElementById('btn-li'), a=document.getElementById('btn-prox');
+  if(estado.concluido||trilhaLiberada()){ h3.textContent='✅ Resumo lido — Simulado destravado!'; txt.textContent=estado.concluido?'Agora encare o Simulado valendo, como se fosse a prova.':'Trilha liberada pelos pais.'; b.disabled=true; b.textContent=estado.concluido?'✅ Resumo concluído':'✅ Li o resumo até o fim'; a.classList.remove('off'); }
+  else { h3.textContent='🔒 Próxima etapa: Simulado'; txt.textContent=(estado.rolagemMax||0)>=90?'Confirme a leitura para destravar o Simulado.':'Role até o fim da página para habilitar o botão (rolagem: '+Math.round(estado.rolagemMax||0)+'%).'; a.classList.add('off'); }
+  marcarNav();
+}
+function exportar(){ var blob=new Blob([JSON.stringify(estado,null,2)],{type:'application/json'}); var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='resumo_balao-sonda.json'; a.click(); }
+
+if(checarTrava()){ salvar(); atualizarFim(); window.addEventListener('scroll',function(){ medirRolagem(); atualizarFim(); }); setTimeout(medirRolagem,300); } else { marcarNav(); }
+</script>
+</body>
+</html>
